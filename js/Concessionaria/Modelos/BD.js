@@ -1,4 +1,4 @@
-import { exececaoConcessionaria } from "../infra/excecaoConcessionaria.js";
+import { exececaoConcessionaria } from "../infra/ConcessionariaException.js";
 import { Carro } from "./Carro.js" 
 export class BancoDados{
     constructor(){

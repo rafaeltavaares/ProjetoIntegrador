@@ -1,4 +1,4 @@
-import { exececaoConcessionaria } from "../../infra/excecaoConcessionaria.js";
+import { exececaoConcessionaria } from "../../infra/ConcessionariaException.js";
 import { BancoDados } from "../BD.js";
 
 export class Interface{
