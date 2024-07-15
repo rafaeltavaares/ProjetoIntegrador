@@ -4,8 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concessionária</title>
+    <script type="module" src="js/Script.js"></script>
 </head>
 <body>
     <h1>Eu sou uma Concessionária</h1>
+
+    <form action="./js/Concessionaria/Modelos/interface/interfaceCliente.js" method="post">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome"><br><br>
+        
+        <label for="usuario">Usuario</label>
+        <input type="text" id="usuario" name="usuario"><br><br>
+
+        <label for="cpf">CPF: </label>
+        <input type="text" name="cpf" \ pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" \ title="Digite um CPF no formato: xxx.xxx.xxx-xx"><br><br>
+        
+        <label for="dataNasc">Data de Nascimeno</label>
+        <input type="date" id="dataNasc" name="dataNasc"><br><br>
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
