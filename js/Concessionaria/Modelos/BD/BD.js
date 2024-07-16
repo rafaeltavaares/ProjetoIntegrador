@@ -1,5 +1,5 @@
 
-//import { ConcessionariaException } from "../../infra/ConcessionariaException";
+import { ConcessionariaException } from "../../infra/ConcessionariaException";
 
 class BancoDados{
     constructor(){

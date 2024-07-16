@@ -1,6 +1,8 @@
-import { Cliente } from "./Concessionaria/Modelos/Cliente.js";
-import { Interface } from "./Concessionaria/Modelos/interface/InterfaceBd.js";
-
+import { Interface } from "../BD/BD";
+import { Cliente } from "../Entidades/Cliente";
+var i = new Interface();
+console.log("teste")
+console.log(i)
 
 
 

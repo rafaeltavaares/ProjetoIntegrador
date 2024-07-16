@@ -1,5 +1,5 @@
-import { Interface } from "../BD/BD";
-import { Cliente } from "../Entidades/Cliente";
+import { Interface } from "../BD/BD.js";
+import { Cliente } from "../Entidades/Cliente.js";
 
 
 const btn = document.getElementById("btnEnviarDadosCliente");
@@ -7,7 +7,7 @@ btn.addEventListener("click",()=>{
     console.log("estou aqui")
     const ic = new InterfaceCliente();
     console.log("aqui")
-    //console.log(ic.coletarDados())
+    console.log(ic.coletarDados())
 
 }); 
 
@@ -25,7 +25,7 @@ class InterfaceCliente{
             cpf : document.getElementById('cpf').value,
             Data_nascimento: document.getElementById('dataNasc').value
         }
-        enviarDados(dados);
+        this.enviarDados(dados);
     }
     enviarDados(dados){
         const cliente = new Cliente(dados);
