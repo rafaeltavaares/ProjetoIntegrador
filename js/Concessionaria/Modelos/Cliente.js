@@ -1,9 +1,10 @@
 export class Cliente{
-    constructor(Nome, Usuario, CPF, Data_nascimento){
-        this.Nome = Nome;
-        this.Usuario = Usuario;
-        this.CPF = CPF;
-        this.data_nascimento = Data_nascimento;
+    constructor(Dados){
+        this.Nome = Dados.Nome;
+        this.Usuario = Dados.Usuario;
+        this.CPF = Dados.CPF;
+        this.data_nascimento = Dados.Data_nascimento;
+        this.tipo = "Cliente"
     }
 
     setNome(Nome){this.Nome = Nome;}
@@ -13,4 +14,6 @@ export class Cliente{
     getUsuario(){return this.Usuario;}
 
     getCPF(){return this.CPF}
+
+    getTipo(){return this.tipo;}
 }
