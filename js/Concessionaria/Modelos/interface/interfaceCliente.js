@@ -1,23 +1,26 @@
-import { cadastroClienteException } from "../../infra/cadastroClienteException";
-import { Cliente } from "../Cliente";
-import { Interface } from "./InterfaceBd";
+import { Interface } from "../BD/BD";
+import { Cliente } from "../Entidades/Cliente";
 
-function coletar(){
+
+const btn = document.getElementById("btnEnviarDadosCliente");
+btn.addEventListener("click",()=>{
+    console.log("estou aqui")
     const ic = new InterfaceCliente();
-    console.log(ic.coletarDados())
-}
+    console.log("aqui")
+    //console.log(ic.coletarDados())
 
- class InterfaceCliente{
+}); 
+
+
+class InterfaceCliente{
     constructor(){
         this.interface = new Interface();
     }
     coletarDados(){
         const nomePuro = document.getElementById('nome').value
-        this.validarNome(nomePuro);
-        
         
         const dados = {
-            nome : document.getElementById('nome').value,
+            nome : nomePuro,
             usuario: document.getElementById('usuario').value,
             cpf : document.getElementById('cpf').value,
             Data_nascimento: document.getElementById('dataNasc').value
@@ -27,6 +30,7 @@ function coletar(){
     enviarDados(dados){
         const cliente = new Cliente(dados);
         this.interface.AdicionarCliente(cliente);
+        console.log(this.interface.listarClientesBD());
     }   
     
     validarNome(nome){
@@ -37,6 +41,8 @@ function coletar(){
     validarCpf(cpf){
         this.interface.verificarCPF(cpf);
     }
-    validarDataNascimento(data_nascimento){}
+    validarDataNascimento(data_nascimento){
+
+    }
 
 }
