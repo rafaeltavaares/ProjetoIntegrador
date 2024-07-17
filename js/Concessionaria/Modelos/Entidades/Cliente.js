@@ -1,9 +1,9 @@
 export class Cliente{
-    constructor(Dados){
-        this.Nome = Dados.Nome;
-        this.Usuario = Dados.Usuario;
-        this.CPF = Dados.CPF;
-        this.data_nascimento = Dados.Data_nascimento;
+    constructor(dados){
+        this.Nome = dados.nome;
+        this.Usuario = dados.usuario;
+        this.CPF = dados.cpf;
+        this.data_nascimento = dados.Data_nascimento;
         this.tipo = "Cliente"
     }
 

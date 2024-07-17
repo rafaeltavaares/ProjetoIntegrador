@@ -1,48 +1,54 @@
 import { Interface } from "../BD/BD.js";
 import { Cliente } from "../Entidades/Cliente.js";
-
-
-const btn = document.getElementById("btnEnviarDadosCliente");
-btn.addEventListener("click",()=>{
-    console.log("estou aqui")
-    const ic = new InterfaceCliente();
-    console.log("aqui")
-    console.log(ic.coletarDados())
-
-}); 
-
-
+import { validarNome, validarDataNascimento } from "../../../Script.js";
 class InterfaceCliente{
     constructor(){
         this.interface = new Interface();
     }
-    coletarDados(){
-        const nomePuro = document.getElementById('nome').value
-        
+
+    enviarDados(dados){
+        if(this.validarNome(dados.nome)){
+
+            if(this.validarCpf(dados.cpf)){
+                
+                if(this.validarDataNascimento(dados.Data_nascimento)){
+                    console.log("enviado")           
+                    const cliente = new Cliente(dados);
+                    this.interface.AdicionarCliente(cliente);
+                    console.log(this.interface.listarClientesBD())
+                
+                }
+            }
+        }
+    }   
+    
+    validarNome(nome){
+        return validarNome(nome);
+    }
+    
+    validarCpf(cpf){
+       return this.interface.verificarCPF(cpf);
+    }
+
+    validarDataNascimento(data_nascimento){
+        return validarDataNascimento(data_nascimento);
+    }
+
+}
+function clienteSetup(){return new InterfaceCliente();}
+
+function clienteInfo(){
+    const ic = clienteSetup();
+    const btn = document.getElementById("btnEnviarDadosCliente");
+    btn.addEventListener("click",()=>{
         const dados = {
-            nome : nomePuro,
+            nome : document.getElementById('nome').value,
             usuario: document.getElementById('usuario').value,
             cpf : document.getElementById('cpf').value,
             Data_nascimento: document.getElementById('dataNasc').value
         }
-        this.enviarDados(dados);
-    }
-    enviarDados(dados){
-        const cliente = new Cliente(dados);
-        this.interface.AdicionarCliente(cliente);
-        console.log(this.interface.listarClientesBD());
-    }   
-    
-    validarNome(nome){
-        if(nome.lenght >=4 && nome.lenght <=80)
-            return true;
-        return false;       
-    }
-    validarCpf(cpf){
-        this.interface.verificarCPF(cpf);
-    }
-    validarDataNascimento(data_nascimento){
-
-    }
-
+        ic.enviarDados(dados);
+    }); 
 }
+
+clienteInfo();
