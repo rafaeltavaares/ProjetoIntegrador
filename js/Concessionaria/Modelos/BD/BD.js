@@ -15,9 +15,8 @@ class BancoDados{
 
     Adicionar(Dados){
         if(Dados.getTipo === "Cliente")
-            console.log("estou aqui")
             this.clientes.push(Dados);
-        if(Dados.getTipo === "Carro"){
+        if(Dados.getTipo === "Veiculo"){
             this.veiculos.push(Dados);
         }
     }
@@ -31,7 +30,7 @@ class BancoDados{
         if(cpfToVerify.length > 11)
             throw new cadastroClienteException("cpf maior que 11 digitos ")    
         //fazer o if que verifica se tem algo além de numeros
-        
+
 
         for (let index = 0; index < this.clientes.length; index++) {
             const element = this.clientes[index];
@@ -58,6 +57,7 @@ export class Interface{
     AdicionarCliente(cliente){
         if(cliente === null || cliente === undefined)
             throw new ConcessionariaException("Tipo cliente Inválido")
+
         this.bancoDados.Adicionar(cliente);
     }
 
