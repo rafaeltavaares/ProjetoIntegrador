@@ -6,6 +6,7 @@
     <title>Concessionária</title>
     <script type="module" src="js/Concessionaria/Modelos/interface/interfaceCliente.js"></script>
     <script type="module" src="./js/Script.js"></script>
+    <script src="js/scripteste.js"></script>
 </head>
 <body>
     <h1>Eu sou uma Concessionária</h1>
@@ -20,7 +21,32 @@
         
         <label for="dataNasc">Data de Nascimeno</label>
         <input type="date" id="dataNasc" name="dataNasc" class="inputCadastro"><br><br>
-        <button type="submit" value="Submit" id="btnEnviarDadosCliente">
+        <button type="submit" value="Submit" id="btnEnviarDadosCliente">enviar</button>
 
+        <h2>------------------------------------------------------------------------------</h2>
+        
+        <label for="cor">Cor:</label>
+        <input type="text" id="cor" name="cor" class="inputCadastro"><br><br>
+        
+        <label for="tipoVeiculo">tipo do Veiculo</label>
+        <select id="tipoVeiculo" name="tipoVeiculo" form="tipoVeiculoForm">
+            <option value="Carro">Carro</option>
+            <option value="Moto">Moto</option>
+        </select><br><br>
+
+        <label for="placa">placa do carro:</label>
+        <input type="text" name="placa" id="placa" class="inputCadastro"\ pattern="^[a-zA-Z]{3}[0-9][A-Za-z0-9][0-9]{2}$" \ title="Digite uma placa no formato: XXX-9999"><br><br>
+        
+        <label for="ano_fabricacao">Ano de frabricação</label>
+        <input type="date" id="ano_fabricacao" name="ano_fabricacao" class="inputCadastro"><br><br>
+        
+        <label for="ValorDiaria">Valor Diaria:</label>
+        <input type="number" id="ValorDiaria" name="ValorDiaria" class="inputCadastro"><br><br>
+        
+        <label for="quilometragem">Quilometragem:</label>
+        <input type="number" id="quilometragem" name="quilometragem" class="inputCadastro"><br><br>
+        
+
+        <button type="submit" value="Submit" id="btnEnviarDadosVeiculo">Enviar</button>
 </body>
 </html>

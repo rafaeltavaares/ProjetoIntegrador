@@ -1,6 +1,5 @@
 export class Veiculo{
-    constructor(nome, cor, tipoVeiculo ,placa, ano_fabricacao, valor_diaria, quilometragram){
-        this.nome = nome;
+    constructor(cor, tipoVeiculo ,placa, ano_fabricacao, valor_diaria, quilometragram){
         this.ano_fabricacao = ano_fabricacao;
         this.valor_diaria = valor_diaria;
         this.quilometragram = quilometragram;

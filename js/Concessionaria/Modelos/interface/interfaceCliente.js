@@ -6,6 +6,8 @@ class InterfaceCliente{
         this.interface = new Interface();
     }
 
+    enviarDadosVeiculo(dados){}
+
     enviarDados(dados){
         if(this.validarNome(dados.nome)){
 
@@ -40,6 +42,20 @@ function clienteSetup(){return new InterfaceCliente();}
 function clienteInfo(){
     const ic = clienteSetup();
     const btn = document.getElementById("btnEnviarDadosCliente");
+    const btn_veiculo = document.getElementById("btnEnviarDadosVeiculo"); 
+    btn_veiculo.addEventListener("click",()=>{
+        const dados = {
+            cor : document.getElementById("cor").value,
+            placa : document.getElementById("placa").value,
+            ano_fabricacao: document.getElementById("ano_fabricacao").value,
+            quilometragem: document.getElementById("quilometragem").value,
+            valor_diaria: document.getElementById("ValorDiaria").value,
+            tipo_veiculo : document.getElementById("tipoVeiculo").value
+        }
+        console.log("estou aqui")
+        console.log(dados);
+    });
+
     btn.addEventListener("click",()=>{
         const dados = {
             nome : document.getElementById('nome').value,
