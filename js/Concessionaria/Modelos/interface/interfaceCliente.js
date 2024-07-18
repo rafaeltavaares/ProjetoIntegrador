@@ -57,8 +57,8 @@ function clienteInfo(){
             ano_fabricacao: document.getElementById("ano_fabricacao").value,
             quilometragem: document.getElementById("quilometragem").value,
             valor_diaria: document.getElementById("ValorDiaria").value,
-            tipo_veiculo : document.getElementById("tipoVeiculo").value
-
+            tipo_veiculo : document.getElementById("tipoVeiculo").value,
+            modelo : document.getElementById("modelo").value
         }
         ic.enviarDadosVeiculo(dados);
         

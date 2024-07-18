@@ -1,9 +1,9 @@
-import { cadastroClienteException } from "./Concessionaria/infra/cadastroClienteException.js";
+import { CadastroClienteException } from "./Concessionaria/infra/CadastroClienteException.js";
 export function validarNome(nome){
         if( nome.length >=4 && nome.length <=80)
             return true;
         else{
-            throw new cadastroClienteException('tamanho inválido');
+            throw new CadastroClienteException('tamanho inválido');
         }
     
 }
@@ -19,6 +19,14 @@ export function validarDataNascimento(data_input){
         if(idadeEmAnos >= 18)
             return true;
         else
-            throw new cadastroClienteException("Idade insuficiente");
+            throw new CadastroClienteException("Idade insuficiente");
+}
+
+export function validarModelo(modelo){
+    if(modelo.length >=4 && modelo.length <= 30)
+        return true;
+    else{
+        throw new CadastroClienteException('tamanho inválido do modelo');
+    }
 }
 
