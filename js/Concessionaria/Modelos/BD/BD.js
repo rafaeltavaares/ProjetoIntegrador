@@ -10,15 +10,38 @@ class BancoDados{
     }
 
     ListarClientes() {
-     return this.clientes;   
+        return this.clientes;   
     }
 
+    ListarVeiculos(){
+        return this.veiculos;
+    }
     Adicionar(Dados){
-        if(Dados.getTipo === "Cliente")
+        console.log(Dados.getTipo())
+        if(Dados.getTipo() === "Cliente")
             this.clientes.push(Dados);
-        if(Dados.getTipo === "Veiculo"){
+        if(Dados.getTipo() === "Veiculo"){
+            
             this.veiculos.push(Dados);
         }
+    }
+
+    validarPlaca(placa){
+        if(this.veiculos.length === 0 && placa.length === 8)
+            return true
+        if(placa.length < 8)
+            throw new cadastroClienteException("Tamanho a placa inválido")
+        if(placa.length > 8)
+            throw new cadastroClienteException("placa maior que 8 digitos")
+        for (let index = 0; index < this.veiculos.length; index++) {
+            const element = array[index];
+            let placa_to_verify = element.getPlaca();
+            if(placa === placa_to_verify)
+                throw new cadastroClienteException("placa já existente");
+            return true
+        }
+
+
     }
 
     validarCPF(cpfToVerify){
@@ -38,8 +61,6 @@ class BancoDados{
             if(cpf === cpfToVerify)
                 throw new ConcessionariaException("cpf ja registrado");
             return true;
-        
-
         }
     }
 
@@ -53,12 +74,15 @@ export class Interface{
     listarClientesBD(){
         return this.bancoDados.ListarClientes();
     }
+    ListarVeiculos(){
+        return this.bancoDados.ListarVeiculos();
+    }
 
-    AdicionarCliente(cliente){
-        if(cliente === null || cliente === undefined)
-            throw new ConcessionariaException("Tipo cliente Inválido")
-
-        this.bancoDados.Adicionar(cliente);
+    Adicionar(dados){
+        if(dados === null || dados === undefined)
+            throw new ConcessionariaException("Dado Inválido")
+        console.log("estou na interface")
+        this.bancoDados.Adicionar(dados);
     }
 
     verificarCPF(cpf){

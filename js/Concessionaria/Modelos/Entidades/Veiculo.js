@@ -1,11 +1,11 @@
 export class Veiculo{
-    constructor(cor, tipoVeiculo ,placa, ano_fabricacao, valor_diaria, quilometragram){
-        this.ano_fabricacao = ano_fabricacao;
-        this.valor_diaria = valor_diaria;
-        this.quilometragram = quilometragram;
-        this.placa = placa;
-        this.Cor = cor;
-        this.tipoVeiculo = tipoVeiculo;
+    constructor(Dados){
+        this.ano_fabricacao = Dados.ano_fabricacao;
+        this.valor_diaria = Dados.valor_diaria;
+        this.quilometragem = Dados.quilometragem;
+        this.placa = Dados.placa;
+        this.Cor = Dados.cor;
+        this.tipoVeiculo = Dados.tipo_veiculo;
         this.tipo = "Veiculo";
     }
 
