@@ -85,6 +85,9 @@ export class Interface{
         console.log("estou na interface")
         this.bancoDados.Adicionar(dados);
     }
+    verificarPlaca(placa){
+        return this.bancoDados.validarPlaca(placa);
+    }
 
     verificarCPF(cpf){
         console.log()

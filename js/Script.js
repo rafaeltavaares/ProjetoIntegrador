@@ -1,4 +1,5 @@
 import { CadastroClienteException } from "./Concessionaria/infra/CadastroClienteException.js";
+import { CadastroVeiculoException } from "./Concessionaria/infra/cadastroVeiculoException.js";
 export function validarNome(nome){
         if( nome.length >=4 && nome.length <=80)
             return true;
@@ -8,6 +9,17 @@ export function validarNome(nome){
     
 }
 
+export function validarDiaria(valor_diaria){
+    if(valor_diaria > 0 )
+        return true;
+    throw new CadastroVeiculoException("valor da diaria inválido");
+}
+
+export function validarQuilometragem(quilometragem){
+    if(quilometragem > 0)
+        return true;
+    throw new CadastroVeiculoException("Quilometragem Inválida");
+}
 export function validarDataNascimento(data_input){
     const dataAtual = new Date();
 

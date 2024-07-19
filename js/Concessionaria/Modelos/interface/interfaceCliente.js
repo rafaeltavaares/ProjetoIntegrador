@@ -1,17 +1,30 @@
 import { Interface } from "../BD/BD.js";
 import { Veiculo } from "../Entidades/Veiculo.js";
 import { Cliente } from "../Entidades/Cliente.js";
-import { validarNome, validarDataNascimento } from "../../../Script.js";
+import { validarNome, validarDataNascimento, validarQuilometragem, validarDiaria, validarModelo } from "../../../Script.js";
 class InterfaceCliente{
     constructor(){
         this.interface = new Interface();
     }
 
     enviarDadosVeiculo(dados){
-        const veiculo = new Veiculo(dados);
-        this.interface.Adicionar(veiculo);
-        console.log(this.interface.ListarVeiculos());
-        
+
+        if(this.interface.verificarPlaca(dados.placa)){
+
+            if(this.validarModelo(dados.modelo)){
+            
+                if(this.validarDiaria(dados.valor_diaria)){
+            
+                    if(this.validarQuilometragem(dados.quilometragem)){
+                        //adicionar validação de ano de fabricacao!!!!
+                        const veiculo = new Veiculo(dados);
+                        this.interface.Adicionar(veiculo);
+                        return this.interface.ListarVeiculos();
+            
+                    }
+                }
+            }
+        }
     }
 
     enviarDados(dados){
@@ -20,27 +33,25 @@ class InterfaceCliente{
             if(this.validarCpf(dados.cpf)){
                 
                 if(this.validarDataNascimento(dados.Data_nascimento)){
-                    console.log("enviado")           
                     const cliente = new Cliente(dados);
                     this.interface.Adicionar(cliente);
-                    console.log(this.interface.listarClientesBD())
-                
+                    return this.interface.listarClientesBD();
                 }
             }
         }
     }   
-    
-    validarNome(nome){
-        return validarNome(nome);
-    }
-    
-    validarCpf(cpf){
-       return this.interface.verificarCPF(cpf);
-    }
 
-    validarDataNascimento(data_nascimento){
-        return validarDataNascimento(data_nascimento);
-    }
+    validarDiaria(valor_diaria){return validarDiaria(valor_diaria);}
+
+    validarQuilometragem(quilometragem){return validarQuilometragem(quilometragem);}
+
+    validarModelo(modelo){return validarModelo(modelo);}
+    
+    validarNome(nome){return validarNome(nome);}
+
+    validarCpf(cpf){return this.interface.verificarCPF(cpf);}
+
+    validarDataNascimento(data_nascimento){return validarDataNascimento(data_nascimento);}
 
 }
 function clienteSetup(){return new InterfaceCliente();}
