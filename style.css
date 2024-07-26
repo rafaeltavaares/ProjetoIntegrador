@@ -1,0 +1,39 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.conteiner{
+    display: grid;
+    width: 100%;
+    height: 100%;
+
+    grid-template-columns: repeat(3, auto-fill);
+    grid-template-rows:repeat(auto-fill, minmax(100px, 1fr));
+
+    grid-template-areas:
+    "header header header"
+    "navbar conteudo conteudo"
+    "navbar conteudo conteudo"
+    
+}
+
+div{
+    /* height: 100%; */
+}
+.header{ 
+    background-color: rgb(3, 80, 132);
+    grid-area: header;
+}
+.navbar{
+    grid-area: navbar;
+    height: 450px;
+    background-color:rgb(148, 206, 236);
+}
+.conteudo{
+    background-color: rgb(167, 210, 236);
+    grid-area: conteudo;
+}
+label{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 600;
+}
