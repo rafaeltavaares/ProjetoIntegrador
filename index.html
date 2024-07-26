@@ -17,18 +17,18 @@
         <div class="navbar">
         </div>
         <div class="conteudo">
-            <label for="">Lista de clientes</label>
+            <label for="">Lista de clientes</label><BR></BR>
             <div class="cadastroCliente">
-            
+                <label for="cpf">CPF:</label><br>
+                <input type="number" name="cpf" id="cpf" class="inputCadastro"\ pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" \ title="Digite um CPF no formato: xxx.xxx.xxx-xx"><br><br>
+                
                 <label for="nome">Nome:</label><br>
                     <input type="text" id="nome" name="nome" class="inputCadastro"><br><br>
                     
                     <label for="usuario">Usuario</label><br>
                     <input type="text" id="usuario" name="usuario" class="inputCadastro"><br><br>
             
-                    <label for="cpf">CPF:</label><br>
-                    <input type="number" name="cpf" id="cpf" class="inputCadastro"\ pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" \ title="Digite um CPF no formato: xxx.xxx.xxx-xx"><br><br>
-                    
+
                     <label for="dataNasc">Data de Nascimeno</label><br>
                     <input type="date" id="dataNasc" name="dataNasc" class="inputCadastro"><br><br>
                     <button type="submit" value="Submit" id="btnEnviarDadosCliente">enviar</button>
