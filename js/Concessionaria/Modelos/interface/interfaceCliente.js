@@ -49,7 +49,7 @@ export class InterfaceCliente{
         clientes.forEach((item,index) => {
             let itemLista = document.createElement("li");
             console.log(item)
-            itemLista.textContent = `${index} ${item.Nome} ${item.CPF} ${item.Usuario} ${item.data_nascimento}`;
+            itemLista.textContent = `${index} ${item.Nome} ${item.CPF} ${item.data_nascimento}`;
             itensLista.appendChild(itemLista)
         });
 
@@ -81,7 +81,6 @@ function clienteInfo(){
         console.log("teste")
         const dados = {
             nome : document.getElementById('nome').value,
-            usuario: document.getElementById('usuario').value,
             cpf : document.getElementById('cpf').value,
             Data_nascimento: document.getElementById('dataNasc').value
         }

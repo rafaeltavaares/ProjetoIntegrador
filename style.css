@@ -63,7 +63,16 @@ input{
     color: blue;
     padding: 4px;
 }
-.cadastroCliente #cpf:hover{
-    
-}
 
+.cadastroCliente button{
+    border-radius: 7px;
+    width: 90px;
+    height: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.clienteConteiner{
+    display: flex;
+    justify-content: space-evenly;
+    width: 90%;
+    height: 90%;
+}

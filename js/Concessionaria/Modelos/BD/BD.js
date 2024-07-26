@@ -47,25 +47,31 @@ class BancoDados{
     }
 
     validarCPF(cpfToVerify){
-        if(this.clientes.length === 0 && cpfToVerify.length === 11)
+        if(this.clientes.length === 0 && cpfToVerify.length === 11){
             return true
+        }
         if(cpfToVerify.length < 11)
             throw new CadastroClienteException("cpf incompleto")
         if(cpfToVerify.length > 11)
             throw new CadastroClienteException("cpf maior que 11 digitos ")    
-        
 
-
-        for (let index = 0; index < this.clientes.length; index++) {
-            const element = this.clientes[index];
-            let cpf = element.getCPF();
-            if(cpf === cpfToVerify)
-                throw new ConcessionariaException("cpf ja registrado");
-            return true;
+        if(this.clientes.some(cliente => cliente.CPF === cpfToVerify)){
+            throw new ConcessionariaException("cpf ja registrado");
+        }
+        return true;
+            
+        // for (let index = 0; index < this.clientes.length; index++) {
+        //     const element = this.clientes[index];
+        //     console.log(element.CPF)
+        //     let cpf = element.getCPF();
+        //     if(cpf === cpfToVerify){
+        //         throw new ConcessionariaException("cpf ja registrado");
+            
+        //     }
         }
     }
 
-}
+
 
 export class Interface{
     constructor(){
