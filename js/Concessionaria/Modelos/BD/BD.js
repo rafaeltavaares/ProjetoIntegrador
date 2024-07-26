@@ -18,7 +18,7 @@ class BancoDados{
         return this.veiculos;
     }
     Adicionar(Dados){
-        console.log(Dados.getTipo())
+
         if(Dados.getTipo() === "Cliente")
             this.clientes.push(Dados);
         if(Dados.getTipo() === "Veiculo"){
@@ -53,7 +53,7 @@ class BancoDados{
             throw new CadastroClienteException("cpf incompleto")
         if(cpfToVerify.length > 11)
             throw new CadastroClienteException("cpf maior que 11 digitos ")    
-        //fazer o if que verifica se tem algo além de numeros
+        
 
 
         for (let index = 0; index < this.clientes.length; index++) {
@@ -82,7 +82,7 @@ export class Interface{
     Adicionar(dados){
         if(dados === null || dados === undefined)
             throw new ConcessionariaException("Dado Inválido")
-        console.log("estou na interface")
+
         this.bancoDados.Adicionar(dados);
     }
     verificarPlaca(placa){
@@ -90,7 +90,7 @@ export class Interface{
     }
 
     verificarCPF(cpf){
-        console.log()
+
        return this.bancoDados.validarCPF(cpf);
     }
 }

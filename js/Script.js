@@ -20,6 +20,7 @@ export function validarQuilometragem(quilometragem){
         return true;
     throw new CadastroVeiculoException("Quilometragem Inválida");
 }
+
 export function validarDataNascimento(data_input){
     const dataAtual = new Date();
 

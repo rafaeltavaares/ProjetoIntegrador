@@ -2,7 +2,8 @@ import { Interface } from "../BD/BD.js";
 import { Veiculo } from "../Entidades/Veiculo.js";
 import { Cliente } from "../Entidades/Cliente.js";
 import { validarNome, validarDataNascimento, validarQuilometragem, validarDiaria, validarModelo } from "../../../Script.js";
-class InterfaceCliente{
+const itensLista = document.getElementById("resposta");
+export class InterfaceCliente{
     constructor(){
         this.interface = new Interface();
     }
@@ -33,13 +34,26 @@ class InterfaceCliente{
             if(this.validarCpf(dados.cpf)){
                 
                 if(this.validarDataNascimento(dados.Data_nascimento)){
+
                     const cliente = new Cliente(dados);
                     this.interface.Adicionar(cliente);
-                    return this.interface.listarClientesBD();
+                    this.atualizarLista()
                 }
             }
         }
     }   
+
+    atualizarLista(){
+        itensLista.innerHTML = "";
+        let clientes = this.interface.listarClientesBD();
+        clientes.forEach((item,index) => {
+            let itemLista = document.createElement("li");
+            console.log(item)
+            itemLista.textContent = `${index} ${item.Nome} ${item.CPF} ${item.Usuario} ${item.data_nascimento}`;
+            itensLista.appendChild(itemLista)
+        });
+
+    }
 
     validarDiaria(valor_diaria){return validarDiaria(valor_diaria);}
 
@@ -56,10 +70,24 @@ class InterfaceCliente{
 }
 function clienteSetup(){return new InterfaceCliente();}
 
+
 function clienteInfo(){
     const ic = clienteSetup();
     const btn = document.getElementById("btnEnviarDadosCliente");
-    const btn_veiculo = document.getElementById("btnEnviarDadosVeiculo"); 
+    const btn_veiculo = document.getElementById("btnEnviarDadosVeiculo");
+  
+    
+    btn.addEventListener("click",()=>{
+        console.log("teste")
+        const dados = {
+            nome : document.getElementById('nome').value,
+            usuario: document.getElementById('usuario').value,
+            cpf : document.getElementById('cpf').value,
+            Data_nascimento: document.getElementById('dataNasc').value
+        }
+        ic.enviarDados(dados);
+    }); 
+
     btn_veiculo.addEventListener("click",()=>{
         const dados = {
 
@@ -70,20 +98,12 @@ function clienteInfo(){
             valor_diaria: document.getElementById("ValorDiaria").value,
             tipo_veiculo : document.getElementById("tipoVeiculo").value,
             modelo : document.getElementById("modelo").value
+        
         }
         ic.enviarDadosVeiculo(dados);
         
     });
 
-    btn.addEventListener("click",()=>{
-        const dados = {
-            nome : document.getElementById('nome').value,
-            usuario: document.getElementById('usuario').value,
-            cpf : document.getElementById('cpf').value,
-            Data_nascimento: document.getElementById('dataNasc').value
-        }
-        ic.enviarDados(dados);
-    }); 
 }
 
 clienteInfo();

@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concessionária</title>
-    <script type="module" src="js/Concessionaria/Modelos/interface/interfaceCliente.js"></script>
+   
     <link rel="stylesheet" href="style.css">
     <script type="module" src="./js/Script.js"></script>
 </head>
  <body>
 
     <div class="conteiner">
-        <div class="header"></div>
+        <div class="header">
+            <div class="slogan"><Span>Locadora de Veiculos</Span></div>
+        </div>
         <div class="navbar">
 
         </div>
@@ -32,7 +34,7 @@
                     <input type="date" id="dataNasc" name="dataNasc" class="inputCadastro"><br><br>
                     <button type="submit" value="Submit" id="btnEnviarDadosCliente">enviar</button>
             </div>
-            <!-- <h2>---------------</h2>
+            <div id="resposta">Listas</div>
             <div class="cadastroVeiculo">
 
                 <label for="cor">Modelo:</label>
@@ -62,11 +64,12 @@
             
                 <button type="submit" value="Submit" id="btnEnviarDadosVeiculo">Enviar</button>
             
-            </div> -->
+            </div>
             
             
         </div>
         
     </div>
+    <script type="module" src="js/Concessionaria/Modelos/interface/interfaceCliente.js"></script>
 </body> 
 </html>
