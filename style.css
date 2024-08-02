@@ -44,35 +44,101 @@ div{
     background-color: rgb(167, 210, 236);
     grid-area: conteudo;
 }
-label{
-    font-family:Arial, Helvetica, sans-serif; 
-    font-weight: 600;
-}
-.cadastroVeiculo{
+.conteudosec > div{
     display: none;
 }
+
+
+label{
+    font-family:Arial, Helvetica, sans-serif; 
+}
+.cadastroVeiculo button{
+    padding: 3px 5px 3px 5px;
+    font-size: 1.05rem;
+    background-color: rgb(3, 80, 132);
+    color: white;
+    border: 1px solid rgb(3, 80, 132);
+    margin: 3px 0px 3px 0px;
+    cursor: pointer;
+}
+.cadastroVeiculo{
+    /* display: none; */
+}
+.consulta{
+
+}
 .resposta{
-    background-color: bisque;
-    height: 100px;
-    width: 100px;
+
+}
+.cadastroTitulo{
+    color: rgb(61, 61, 160);
+    font-weight: bold;
+    font-size: 20px;
+    padding: 10px;
+    margin-left: 30px;
 }
 /* Design do formulario */
 input{
     border-radius: 3px;
-    border: none;
-    color: blue;
-    padding: 4px;
 }
+.cadastroCliente #nome{
+    width: 100px;
+}
+.feedbackError{
+    /* display: none; */
+    color: red;
 
+}
 .cadastroCliente button{
-    border-radius: 7px;
-    width: 90px;
-    height: 30px;
-    font-family: Arial, Helvetica, sans-serif;
+    padding: 3px 5px 3px 5px;
+    font-size: 1.05rem;
+    background-color: rgb(3, 80, 132);
+    color: white;
+    border: 1px solid rgb(3, 80, 132);
+    margin: 3px 0px 3px 0px;
+    cursor: pointer;
 }
 .clienteConteiner{
     display: flex;
-    justify-content: space-evenly;
+    /* display: none; */
+    /* justify-content: space-evenly; */
     width: 90%;
     height: 90%;
+}
+.inputdata{
+    display: flex;
+    justify-content: space-between;
+    /* background-color: aqua; */
+    width: 100%;
+}
+hr{border: 1px inset rgb(136, 196, 234);}
+/* menu lateral */
+.menu {
+    background-color: #ADD8E6; /* Cor de fundo semelhante à da imagem */
+   
+    padding: 20px;
+    width: 200px;
+}
+
+.menu-section {
+    margin-bottom: 20px;
+}
+
+.menu-section h3 {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #004080; /* Cor azul escura para o texto */
+}
+
+.menu-section a {
+    font-family: Arial, Helvetica, sans-serif;
+    display: block;
+    color: #004080;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+.menu-section a:hover {
+    background-color: rgb(3, 80, 132);
+    color: white;
 }

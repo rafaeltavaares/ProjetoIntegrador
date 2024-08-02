@@ -21,20 +21,30 @@ export function validarQuilometragem(quilometragem){
     throw new CadastroVeiculoException("Quilometragem Inválida");
 }
 
-export function validarDataNascimento(data_input){
+export function validarDataNascimento(data_input) {
     const dataAtual = new Date();
+    const data_nascimento = new Date(data_input);
+    console.log(data_input)
+    const anoAtual = dataAtual.getFullYear();
+    const mesAtual = dataAtual.getMonth();
+    const diaAtual = dataAtual.getDate();
 
-        const data_nascimento = new Date(data_input);
-        const diferencaMilisegundos = dataAtual.getTime() - data_nascimento.getTime()
-        const diferencaEmDias = diferencaMilisegundos / (1000 * 60 * 60 * 24);
-        const idadeEmAnos = Math.floor(diferencaEmDias / 365);
-        
-        if(idadeEmAnos >= 18)
-            return true;
-        else
-            throw new CadastroClienteException("Idade insuficiente");
+    const anoNascimento = data_nascimento.getFullYear();
+    const mesNascimento = data_nascimento.getMonth();
+    const diaNascimento = data_nascimento.getDate();
+
+    let idade = anoAtual - anoNascimento;
+    let diaNascimentoNovo = diaNascimento + 1; // por algum motivo o diaNascimento tava pegando o dia atual - 1 então pra resolver somamos 1 :)
+    if (mesAtual < mesNascimento || (mesAtual === mesNascimento && diaAtual < diaNascimentoNovo)) {
+        idade--;
+    }
+    console.log(idade)
+    if (idade >= 18) {
+        return true;
+    } else {
+        throw new CadastroClienteException("Idade insuficiente");
+    }
 }
-
 export function validarModelo(modelo){
     if(modelo.length >=4 && modelo.length <= 30)
         return true;

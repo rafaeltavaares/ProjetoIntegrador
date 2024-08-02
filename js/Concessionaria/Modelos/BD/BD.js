@@ -34,16 +34,10 @@ class BancoDados{
             throw new CadastroVeiculoException("Tamanho a placa inválido")
         if(placa.length > 8)
             throw new CadastroVeiculoException("placa maior que 8 digitos")
-        for (let index = 0; index < this.veiculos.length; index++) {
-
-            const element = this.veiculos[index];
-            let placa_to_verify = element.getPlaca();
-            if(placa === placa_to_verify)
-                throw new CadastroVeiculoException("placa já existente");
-            return true
+        if(this.veiculos.some(veiculo => veiculo.placa === placa)){
+            throw new ConcessionariaException("placa ja registrada");
         }
-
-
+        return true;
     }
 
     validarCPF(cpfToVerify){
@@ -59,15 +53,6 @@ class BancoDados{
             throw new ConcessionariaException("cpf ja registrado");
         }
         return true;
-            
-        // for (let index = 0; index < this.clientes.length; index++) {
-        //     const element = this.clientes[index];
-        //     console.log(element.CPF)
-        //     let cpf = element.getCPF();
-        //     if(cpf === cpfToVerify){
-        //         throw new ConcessionariaException("cpf ja registrado");
-            
-        //     }
         }
     }
 
