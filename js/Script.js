@@ -21,6 +21,22 @@ export function validarQuilometragem(quilometragem){
     throw new CadastroVeiculoException("Quilometragem Inválida");
 }
 
+export function validarAnoFabricação(data_input){
+    const dataAtual = new Date();
+    const dataFabricacao = new Date(data_input);
+    const anoAtual = dataAtual.getFullYear();
+
+    const anoFabricacao = dataFabricacao.getFullYear();
+
+    if(anoFabricacao >= 2000 && anoFabricacao <= anoAtual){
+        return true;
+    }else{
+        throw new CadastroVeiculoException("Ano de fabricação não permitido para o padrão da empresa");
+    }
+
+
+}
+
 export function validarDataNascimento(data_input) {
     const dataAtual = new Date();
     const data_nascimento = new Date(data_input);
@@ -38,7 +54,7 @@ export function validarDataNascimento(data_input) {
     if (mesAtual < mesNascimento || (mesAtual === mesNascimento && diaAtual < diaNascimentoNovo)) {
         idade--;
     }
-    console.log(idade)
+
     if (idade >= 18) {
         return true;
     } else {

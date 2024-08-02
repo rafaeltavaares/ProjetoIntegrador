@@ -1,7 +1,7 @@
 import { Interface } from "../BD/BD.js";
 import { Veiculo } from "../Entidades/Veiculo.js";
 import { Cliente } from "../Entidades/Cliente.js";
-import { validarNome, validarDataNascimento, validarQuilometragem, validarDiaria, validarModelo } from "../../../Script.js";
+import { validarNome, validarDataNascimento, validarQuilometragem, validarDiaria, validarModelo, validarAnoFabricação } from "../../../Script.js";
 const itensLista = document.getElementById("resposta");
 const itensListaVeiculo = document.getElementById("respostaVeiculo");
 
@@ -11,7 +11,7 @@ export class InterfaceCliente{
     }
 
     enviarDadosVeiculo(dados){
-        console.log("estou aqui")
+
         let modeloError = document.getElementById("ModeloError");
         let corError = document.getElementById("corError");
         let tipoError = document.getElementById("tipoError");
@@ -46,6 +46,11 @@ export class InterfaceCliente{
         } catch (error) {
             quilometragemError.innerHTML = error.mensagem;
         }
+        try {
+            this.validarDataFabricacao(dados.ano_fabricacao)
+        } catch (error) {
+            anoError.innerHTML = error.mensagem;
+        }
         if (placaError.innerHTML === "") {
             
             if (modeloError.innerHTML === "") {
@@ -53,11 +58,15 @@ export class InterfaceCliente{
                 if (diariaError.innerHTML === "") {
             
                     if (quilometragemError.innerHTML === "") {
-            
-                        const veiculo = new Veiculo(dados);
-                        this.interface.Adicionar(veiculo);
-                        console.log(this.interface.ListarVeiculos())
-                        this.atualizarVeiculosLista();               
+                        
+                        if (anoError.innerHTML === "") {
+                            
+                            const veiculo = new Veiculo(dados);
+                            this.interface.Adicionar(veiculo);
+                            console.log(this.interface.ListarVeiculos())
+                            this.atualizarVeiculosLista();    
+                    
+                        }              
             
                     }
                 }
@@ -134,6 +143,7 @@ export class InterfaceCliente{
         });
 
     }
+    validarDataFabricacao(dataFabricacao){return validarAnoFabricação(dataFabricacao);}
 
     validarDiaria(valor_diaria){return validarDiaria(valor_diaria);}
 
