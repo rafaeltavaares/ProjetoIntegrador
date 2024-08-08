@@ -63,7 +63,7 @@ export class InterfaceCliente{
                             
                             const veiculo = new Veiculo(dados);
                             this.interface.Adicionar(veiculo);
-                            console.log(this.interface.ListarVeiculos())
+                            window.alert("Cadastro Inserido!")
                             this.atualizarVeiculosLista();    
                     
                         }              
@@ -116,6 +116,7 @@ export class InterfaceCliente{
                 
                 const cliente = new Cliente(dados);
                 this.interface.Adicionar(cliente);
+                window.alert("Cadastro Inserido!")
                 this.atualizarLista()
             
                 }
@@ -127,22 +128,76 @@ export class InterfaceCliente{
         let veiculos = this.interface.ListarVeiculos();
         veiculos.forEach((item,index) => {
             let itemLista = document.createElement("li");
-            console.log(item)
-            itemLista.textContent = `${index} ${item.tipoVeiculo} ${item.placa} ${item.modelo} ${item.Cor} ${item.quilometragem} ${item.valor_diaria} ${item.ano_fabricacao}`;
+
+            const spanDescricao = document.createElement("span")
+            spanDescricao.textContent = `${index} ${item.tipoVeiculo} ${item.placa} ${item.modelo} ${item.Cor} ${item.quilometragem} ${item.valor_diaria} ${item.ano_fabricacao}`;
+            
+            const btnEditar = document.createElement("button");
+            btnEditar.textContent = 'Editar';
+            btnEditar.onclick = () => {
+                const inputs = document.querySelectorAll("#veiculoConteiner input")
+
+                inputs.forEach(( input ) => {
+                    if(input.id !=='ValorDiaria'){
+                        input.disabled = true;
+                    }  
+                })
+            }
+            
+            const btnExcluir = document.createElement("button");
+            btnExcluir.textContent = "Excluir";
+            btnExcluir.onclick = () => {
+                let item = veiculos[index];
+                const confirmacao = confirm(`Deseja realmente excluir o veiculo da placa: "${item.placa}"?`);
+        
+                if (!confirmacao) {
+                    return;
+                }
+                this.interface.excluir("veiculo",index);
+                this.atualizarVeiculosLista();
+            };
+
+            itemLista.appendChild(spanDescricao)
+            itemLista.appendChild(btnEditar);
+            itemLista.appendChild(btnExcluir);
             itensListaVeiculo.appendChild(itemLista)
         });
     }
+
     atualizarLista(){
         itensLista.innerHTML = "";
         let clientes = this.interface.listarClientesBD();
         clientes.forEach((item,index) => {
             let itemLista = document.createElement("li");
-           
-            itemLista.textContent = `${index} ${item.Nome} ${item.CPF} ${item.data_nascimento}`;
+
+            const spanDescricao = document.createElement("span")
+            spanDescricao.textContent = `${index} ${item.Nome} ${item.CPF} ${item.data_nascimento}`;
+
+            const btnEditar = document.createElement("button");
+            btnEditar.textContent = 'Editar';
+            btnEditar.onclick = () => {console.log("estou editando")}
+            
+            const btnExcluir = document.createElement("button");
+            btnExcluir.textContent = "Excluir";
+            btnExcluir.onclick = () => {
+                let item = clientes[index];
+                const confirmacao = confirm(`Deseja realmente excluir a pessoa do cpf: "${item.CPF}"?`);
+        
+                if (!confirmacao) {
+                    return;
+                }
+                this.interface.excluir("cliente",index);
+                this.atualizarLista();
+            };
+
+            itemLista.appendChild(spanDescricao)
+            // itemLista.appendChild(btnEditar);
+            itemLista.appendChild(btnExcluir);
             itensLista.appendChild(itemLista)
         });
 
     }
+  
     validarDataFabricacao(dataFabricacao){return validarAnoFabricação(dataFabricacao);}
 
     validarDiaria(valor_diaria){return validarDiaria(valor_diaria);}
@@ -179,8 +234,7 @@ function clienteInfo(){
 
     btn_veiculo.addEventListener("click",()=>{
         const dados = {
-
-            cor : document.getElementById("cor").value,
+            
             placa : document.getElementById("placa").value,
             ano_fabricacao: document.getElementById("ano_fabricacao").value,
             quilometragem: document.getElementById("quilometragem").value,

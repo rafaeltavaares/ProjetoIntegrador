@@ -5,7 +5,6 @@ export class Veiculo{
         this.valor_diaria = Dados.valor_diaria;
         this.quilometragem = Dados.quilometragem;
         this.placa = Dados.placa;
-        this.Cor = Dados.cor;
         this.tipoVeiculo = Dados.tipo_veiculo;
         this.tipo = "Veiculo";
     }

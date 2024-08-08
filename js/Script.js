@@ -22,18 +22,18 @@ export function validarQuilometragem(quilometragem){
 }
 
 export function validarAnoFabricação(data_input){
-    const dataAtual = new Date();
-    const dataFabricacao = new Date(data_input);
-    const anoAtual = dataAtual.getFullYear();
+    // const dataAtual = new Date();
+    
+    // const anoAtual = dataAtual.getFullYear();
 
-    const anoFabricacao = dataFabricacao.getFullYear();
+    
 
-    if(anoFabricacao >= 2000 && anoFabricacao <= anoAtual){
-        return true;
-    }else{
-        throw new CadastroVeiculoException("Ano de fabricação não permitido para o padrão da empresa");
-    }
-
+    // if(anoFabricacao >= 2000 && data_input <= anoAtual){
+    //     return true;
+    // }else{
+    //     throw new CadastroVeiculoException("Ano de fabricação não permitido para o padrão da empresa");
+    // }
+    return true;
 
 }
 
