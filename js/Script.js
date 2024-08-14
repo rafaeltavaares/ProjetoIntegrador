@@ -4,7 +4,7 @@ export function validarNome(nome){
         if( nome.length >=4 && nome.length <=80)
             return true;
         else{
-            throw new CadastroClienteException('tamanho inválido');
+            throw new CadastroClienteException('Nome deve ter entre 4 e 80 caracteres!');
         }
     
 }
@@ -12,30 +12,24 @@ export function validarNome(nome){
 export function validarDiaria(valor_diaria){
     if(valor_diaria > 0 )
         return true;
-    throw new CadastroVeiculoException("valor da diaria inválido");
+    throw new CadastroVeiculoException("Valor diária inválido! Valor deve ser maior que zero");
 }
 
 export function validarQuilometragem(quilometragem){
     if(quilometragem > 0)
         return true;
-    throw new CadastroVeiculoException("Quilometragem Inválida");
+    throw new CadastroVeiculoException("Quilometragem inválida! Valor deve ser maior que zero");
+}
+export function validarAnoFabricacao(data_input) {
+    console.log(data_input);
+    const anoAtual = new Date().getFullYear();
+    if (data_input > 1999 && data_input <= anoAtual) {
+        return true;
+    } else {
+        return new CadastroVeiculoException(`Ano inválido! Ano deve ser maior que 1999 e menor ou igual ao ano atual.`);
+    }
 }
 
-export function validarAnoFabricação(data_input){
-    // const dataAtual = new Date();
-    
-    // const anoAtual = dataAtual.getFullYear();
-
-    
-
-    // if(anoFabricacao >= 2000 && data_input <= anoAtual){
-    //     return true;
-    // }else{
-    //     throw new CadastroVeiculoException("Ano de fabricação não permitido para o padrão da empresa");
-    // }
-    return true;
-
-}
 
 export function validarDataNascimento(data_input) {
     const dataAtual = new Date();
@@ -58,14 +52,14 @@ export function validarDataNascimento(data_input) {
     if (idade >= 18) {
         return true;
     } else {
-        throw new CadastroClienteException("Idade insuficiente");
+        throw new CadastroClienteException(`O cliente tem ${data_input} anos. Deve ter pelo menos 18 anos!`);
     }
 }
 export function validarModelo(modelo){
     if(modelo.length >=4 && modelo.length <= 30)
         return true;
     else{
-        throw new CadastroClienteException('tamanho inválido do modelo');
+        throw new CadastroClienteException('Modelo inválido! Modelo deve ter de 4 a 30 caracteres.');
     }
 }
 

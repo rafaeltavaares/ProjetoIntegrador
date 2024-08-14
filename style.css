@@ -70,6 +70,46 @@ label{
 .resposta{
 
 }
+.tabelaClientes {
+    width: 80%;
+    border-collapse: collapse;
+    background-color: #e0e7e7;
+    font-family: Arial, sans-serif;
+}
+
+.tabelaClientes th, .tabelaClientes td {
+    border: 1.5px solid rgb(167, 210, 236);
+    padding: 10px;
+    text-align: left;
+    color: #004080;
+}
+
+.tabelaClientes th {
+    background-color: #004080;
+    color: white;
+}
+
+.tabelaClientes tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.tabelaClientes tr:hover {
+    background-color: #a2e4fa;
+}
+
+.tabelaClientes .btnAcoes {
+    background-color: #004080;
+    color: white;
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    cursor: pointer;
+}
+
+.tabelaClientes .btnAcoes:hover {
+    background-color: #003366;
+}
+
 .cadastroTitulo{
     color: rgb(61, 61, 160);
     font-weight: bold;
@@ -124,10 +164,15 @@ hr{border: 1px inset rgb(136, 196, 234);}
     margin-bottom: 20px;
 }
 
-.menu-section h3 {
+.menu-section li {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     color: #004080; /* Cor azul escura para o texto */
+    list-style-type: none;
+    font-size:large;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-top: 10px;
 }
 
 .menu-section a {
@@ -136,6 +181,7 @@ hr{border: 1px inset rgb(136, 196, 234);}
     color: #004080;
     text-decoration: none;
     margin-top: 5px;
+    margin-left: 50px;
 }
 
 .menu-section a:hover {

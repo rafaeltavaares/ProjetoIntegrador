@@ -1,10 +1,20 @@
 import { Interface } from "../BD/BD.js";
 import { Veiculo } from "../Entidades/Veiculo.js";
 import { Cliente } from "../Entidades/Cliente.js";
-import { validarNome, validarDataNascimento, validarQuilometragem, validarDiaria, validarModelo, validarAnoFabricação } from "../../../Script.js";
-const itensLista = document.getElementById("resposta");
-const itensListaVeiculo = document.getElementById("respostaVeiculo");
+import { validarNome, validarDataNascimento, validarQuilometragem, validarDiaria, validarModelo, validarAnoFabricacao } from "../../../Script.js";
+const itensLista = document.getElementById("clientesList");
+const itensListaVeiculo = document.getElementById("VeiculosList");
+const formularioVeiculo = document.getElementById("formularioVeiculo")
+const nome = document.getElementById('nome');
+const cpf = document.getElementById('cpf');
+const Data_nascimento= document.getElementById('dataNasc');
 
+let placa = document.getElementById("placa");
+let ano_fabricacao= document.getElementById("ano_fabricacao");
+let quilometragem= document.getElementById("quilometragem");
+let valor_diaria= document.getElementById("ValorDiaria");
+
+let modelo = document.getElementById("modelo");
 export class InterfaceCliente{
     constructor(){
         this.interface = new Interface();
@@ -13,14 +23,14 @@ export class InterfaceCliente{
     enviarDadosVeiculo(dados){
 
         let modeloError = document.getElementById("ModeloError");
-        let corError = document.getElementById("corError");
+ 
         let tipoError = document.getElementById("tipoError");
         let placaError = document.getElementById("placaError");
         let anoError = document.getElementById("anoError");
         let diariaError = document.getElementById("diariaError");
         let quilometragemError = document.getElementById("quilometragemError");
         modeloError.innerHTML = "";
-        corError.innerHTML = "";
+       
         tipoError.innerHTML = "";
         placaError.innerHTML = "";
         anoError.innerHTML = "";
@@ -29,26 +39,54 @@ export class InterfaceCliente{
         try {
             this.interface.verificarPlaca(dados.placa)
         } catch (error) {
+            placa.value = dados.placa;
+            ano_fabricacao.value = dados.ano_fabricacao;
+            quilometragem.value = dados.quilometragem;
+            valor_diaria.value = dados.valor_diaria;
+            modelo.value = dados.modelo;
             placaError.innerHTML = error.mensagem;
         }
         try {
             this.validarModelo(dados.modelo)
         } catch (error) {
+            
+            placa.value = dados.placa;
+            ano_fabricacao.value = dados.ano_fabricacao;
+            quilometragem.value = dados.quilometragem;
+            valor_diaria.value = dados.valor_diaria;
+            modelo.value = dados.modelo;
             modeloError.innerHTML = error.mensagem;
         }
         try {
+            
             this.validarDiaria(dados.valor_diaria)
         } catch (error) {
+            placa.value = dados.placa;
+            ano_fabricacao.value = dados.ano_fabricacao;
+            quilometragem.value = dados.quilometragem;
+            valor_diaria.value = dados.valor_diaria;
+            modelo.value = dados.modelo;
             diariaError.innerHTML = error.mensagem;
         }
         try {
             this.validarQuilometragem(dados.quilometragem)
         } catch (error) {
+            placa.value = dados.placa;
+            ano_fabricacao.value = dados.ano_fabricacao;
+            quilometragem.value = dados.quilometragem;
+            valor_diaria.value = dados.valor_diaria;
+            modelo.value = dados.modelo;
             quilometragemError.innerHTML = error.mensagem;
         }
         try {
+            console.log(dados.ano_fabricacao)
             this.validarDataFabricacao(dados.ano_fabricacao)
         } catch (error) {
+            placa.value = dados.placa;
+            ano_fabricacao.value = dados.ano_fabricacao;
+            quilometragem.value = dados.quilometragem;
+            valor_diaria.value = dados.valor_diaria;
+            modelo.value = dados.modelo;
             anoError.innerHTML = error.mensagem;
         }
         if (placaError.innerHTML === "") {
@@ -63,7 +101,9 @@ export class InterfaceCliente{
                             
                             const veiculo = new Veiculo(dados);
                             this.interface.Adicionar(veiculo);
+                        
                             window.alert("Cadastro Inserido!")
+                            // dados.tipo_veiculo.textContent = '';
                             this.atualizarVeiculosLista();    
                     
                         }              
@@ -89,25 +129,24 @@ export class InterfaceCliente{
         this.validarNome(dados.nome)
    
        } catch (error) {
-        
+        nome.value = dados.nome;
+        cpf.value = dados.cpf;
         nomeError.innerHTML = error.mensagem
        }
        try {
 
         this.validarCpf(dados.cpf)
        } catch (error) {
-      
+        nome.value = dados.nome;
+        cpf.value = dados.cpf;
+        
         cpfError.innerHTML = error.mensagem
        }
        try {
         this.validarDataNascimento(dados.Data_nascimento)
        } catch (error) {
-       
         dataError.innerHTML = error.mensagem
        }
-       console.log(dataError.innerHTML)
-       console.log(nomeError.innerHTML)
-       console.log(cpfError.innerHTML)
        if(dataError.innerHTML === ""){
 
         if(nomeError.innerHTML === ""){
@@ -127,21 +166,58 @@ export class InterfaceCliente{
         itensListaVeiculo.innerHTML = "";
         let veiculos = this.interface.ListarVeiculos();
         veiculos.forEach((item,index) => {
-            let itemLista = document.createElement("li");
+            // let itemLista = document.createElement("li");
 
-            const spanDescricao = document.createElement("span")
-            spanDescricao.textContent = `${index} ${item.tipoVeiculo} ${item.placa} ${item.modelo} ${item.Cor} ${item.quilometragem} ${item.valor_diaria} ${item.ano_fabricacao}`;
-            
+            // const spanDescricao = document.createElement("span")
+            // spanDescricao.textContent = `${index} ${item.tipoVeiculo} ${} ${item.modelo} ${item.Cor} ${item.quilometragem} ${item.valor_diaria} ${item.ano_fabricacao}`;
+           let row = document.createElement('tr')
+           let placa_formatada = item.placa.replace(/([a-zA-Z]{3})(\d{4})/, "$1-$2");
+            row.innerHTML = `
+            <td>${placa_formatada}</td>
+            <td> ${item.tipoVeiculo} </td>
+            <td>${item.modelo}</td>
+            <td> ${item.ano_fabricacao} </td>
+            <td>${item.valor_diaria}</td>
+            <td> ${item.quilometragem} </td>
+        `;   
+            let buttons = document.createElement('td')
             const btnEditar = document.createElement("button");
             btnEditar.textContent = 'Editar';
             btnEditar.onclick = () => {
-                const inputs = document.querySelectorAll("#veiculoConteiner input")
+                           // Chama a div do formulário de cadastro de veículo
+            document.getElementById('veiculoConteiner').style.display = 'block';
+            document.getElementById('consultaVeiculo').style.display = 'none';
 
-                inputs.forEach(( input ) => {
-                    if(input.id !=='ValorDiaria'){
-                        input.disabled = true;
-                    }  
-                })
+            // Desabilita todos os campos exceto o campo "ValorDiaria"
+            const inputs = document.querySelectorAll("#veiculoConteiner input");
+            inputs.forEach((input) => {
+                if (input.id !== 'ValorDiaria') {
+                    input.disabled = true;
+                } else {
+                    // Preenche o campo "ValorDiaria" com o valor atual
+                    input.value = item.valor_diaria;
+                    input.disabled = false;
+                }
+            });
+
+            // Configura o botão de salvar para atualizar o valor da diária
+            const btnSalvar = document.getElementById('btnEnviarDadosVeiculo');
+            btnSalvar.onclick = () => {
+                const novoValorDiaria = document.getElementById('ValorDiaria').value;
+                item.valor_diaria = novoValorDiaria;
+
+                // Atualiza a lista de veículos com o novo valor da diária
+                this.atualizarVeiculosLista();
+                alert('Valor da diária atualizado com sucesso!');
+
+                // Oculta o formulário de cadastro após a edição
+                document.getElementById('veiculoConteiner').style.display = 'none';
+
+                // Reativa os campos desativados
+                inputs.forEach((input) => {
+                    input.disabled = false;
+                });
+            };
             }
             
             const btnExcluir = document.createElement("button");
@@ -156,11 +232,12 @@ export class InterfaceCliente{
                 this.interface.excluir("veiculo",index);
                 this.atualizarVeiculosLista();
             };
-
-            itemLista.appendChild(spanDescricao)
-            itemLista.appendChild(btnEditar);
-            itemLista.appendChild(btnExcluir);
-            itensListaVeiculo.appendChild(itemLista)
+            btnEditar.classList.add('btnAcoes')
+            btnExcluir.classList.add('btnAcoes')
+            buttons.appendChild(btnEditar);
+            buttons.appendChild(btnExcluir);
+            row.appendChild(buttons)
+            itensListaVeiculo.appendChild(row)
         });
     }
 
@@ -168,17 +245,22 @@ export class InterfaceCliente{
         itensLista.innerHTML = "";
         let clientes = this.interface.listarClientesBD();
         clientes.forEach((item,index) => {
-            let itemLista = document.createElement("li");
 
-            const spanDescricao = document.createElement("span")
-            spanDescricao.textContent = `${index} ${item.Nome} ${item.CPF} ${item.data_nascimento}`;
+            let formatado = item.CPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+            let data_formatada = item.data_nascimento.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")
+            let row = document.createElement("tr") 
 
-            const btnEditar = document.createElement("button");
-            btnEditar.textContent = 'Editar';
-            btnEditar.onclick = () => {console.log("estou editando")}
+            row.innerHTML = `
+            <td>${formatado}</td>
+            <td>${item.Nome}</td>
+            <td>${data_formatada}</td>
+        `; 
+            let buttons = document.createElement('td');
             
+
             const btnExcluir = document.createElement("button");
             btnExcluir.textContent = "Excluir";
+            btnExcluir.classList.add('btnAcoes')
             btnExcluir.onclick = () => {
                 let item = clientes[index];
                 const confirmacao = confirm(`Deseja realmente excluir a pessoa do cpf: "${item.CPF}"?`);
@@ -190,15 +272,21 @@ export class InterfaceCliente{
                 this.atualizarLista();
             };
 
-            itemLista.appendChild(spanDescricao)
-            // itemLista.appendChild(btnEditar);
-            itemLista.appendChild(btnExcluir);
-            itensLista.appendChild(itemLista)
+            const btnAlugar = document.createElement("button")
+            btnAlugar.classList.add('btnAcoes')
+            btnAlugar.textContent = "Alugar"
+            btnAlugar.onclick = () => {
+                console.log("alugando..")
+            }
+            buttons.appendChild(btnAlugar);
+            buttons.appendChild(btnExcluir);
+            row.appendChild(buttons);
+            itensLista.appendChild(row);
         });
 
     }
   
-    validarDataFabricacao(dataFabricacao){return validarAnoFabricação(dataFabricacao);}
+    validarDataFabricacao(dataFabricacao){return validarAnoFabricacao(dataFabricacao);}
 
     validarDiaria(valor_diaria){return validarDiaria(valor_diaria);}
 
@@ -223,28 +311,34 @@ function clienteInfo(){
   
     
     btn.addEventListener("click",()=>{
-    
+
         const dados = {
-            nome : document.getElementById('nome').value,
-            cpf : document.getElementById('cpf').value,
-            Data_nascimento: document.getElementById('dataNasc').value
+            nome : nome.value,
+            cpf : cpf.value,
+            Data_nascimento: Data_nascimento.value
         }
+        nome.value = ''
+        cpf.value = ''
         ic.enviarDados(dados);
+        
     }); 
 
     btn_veiculo.addEventListener("click",()=>{
+
         const dados = {
-            
-            placa : document.getElementById("placa").value,
-            ano_fabricacao: document.getElementById("ano_fabricacao").value,
-            quilometragem: document.getElementById("quilometragem").value,
-            valor_diaria: document.getElementById("ValorDiaria").value,
-            tipo_veiculo : document.getElementById("tipoVeiculo").value,
-            modelo : document.getElementById("modelo").value
-        
+            placa : placa.value,
+            ano_fabricacao: ano_fabricacao.value,
+            quilometragem: quilometragem.value,
+            valor_diaria: valor_diaria.value,
+            tipo_veiculo: document.querySelector('input[name="tipodeveiculo"]:checked').value,
+            modelo : modelo.value
         }
+            quilometragem.value = ''
+            placa.value = ''
+            ano_fabricacao.value = ''
+            valor_diaria.value = ''
+            modelo.value = ''
         ic.enviarDadosVeiculo(dados);
-        
     });
 
 }

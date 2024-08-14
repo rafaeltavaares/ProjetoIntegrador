@@ -17,18 +17,19 @@
         </div>
         <div class="navbar">
             <div class="menu-section">
-                <h3>Clientes</h3>
-                <a href="" onclick="visibilidade(event,'clienteConteiner')">Incluir</a>
-                <a href=""onclick="visibilidade(event,'consulta')">Consultar</a>
-            </div>
-            <div class="menu-section">
-                <h3>Veículos</h3>
-                <a href="" onclick="visibilidade(event,'veiculoConteiner')">Incluir</a>
-                <a href="" onclick="visibilidade(event,'consultaVeiculo')">Consultar</a>
-            </div>
-            <div class="menu-section">
-                <h3>Locação</h3>
-                <a href="#">Consultar</a>
+                <li>Clientes <br>
+                    <a href="" onclick="visibilidade(event,'clienteConteiner')">Incluir</a>
+                    <ul><a href=""onclick="visibilidade(event,'consulta')">Consultar</a></ul>
+                </li>
+
+                <li>Veículo
+                    <ul><a href="" onclick="visibilidade(event,'veiculoConteiner')">Incluir</a></ul>
+                    <ul><a href="" onclick="visibilidade(event,'consultaVeiculo')">Consultar</a></ul>    
+                </li>
+                <li>Locação              
+                    <ul><a href="#">Consultar</a></ul>
+                </li>
+                
             </div>
         </div>
         <div class="conteudo">
@@ -61,9 +62,22 @@
                     </div>
                     <div class="consulta" id="consulta">
                         <div class="tituloConteiner">
-                            <label for="" class="cadastroTitulo"><H2>Consulta de clientes</H2></label><br>
+                            <label for="" class="cadastroTitulo"><H2>Lista de clientes</H2></label><br>
                             <hr>
                         </div>
+                        <table class="tabelaClientes">
+                            <thead>
+                                <tr>
+                                    <th>CPF</th>
+                                    <th>Nome</th>
+                                    <th>Data de nascimento</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientesList">
+                                <!-- Linhas da tabela serão inseridas dinamicamente -->
+                            </tbody>
+                        </table>
                         <div class="resposta" id="resposta">
                             
                         </div>
@@ -73,44 +87,62 @@
                             <label for="" class="cadastroTitulo"><h2>Cadastro de veiculos</h2></label><br>
                             <hr>
                         </div>
-                        
+                        <div class="cadastroVeiculo" id="cadastroVeiculo">
+                    
                         <label for="placa">placa do carro:</label>
-                        <input type="text" name="placa" id="placa" class="inputCadastro"\ pattern="^[a-zA-Z]{3}[0-9][A-Za-z0-9][0-9]{2}$" \ title="Digite uma placa no formato: XXX-9999"><label for="" id="placaError" class="feedbackError"></label>
+                        <input type="text" name="placa" id="placa" class="inputCadastro"><label for="" id="placaError" class="feedbackError"></label>
                         <br><br>
                         
-                        <div class="cadastroVeiculo" id="cadastroVeiculo">
                             <label for="cor">Modelo:</label>
-                            <input type="text" id="modelo" name="modelo" class="inputCadastro"><label for="" id="ModeloError" class="feedbackError"></label>
+                                <input type="text" id="modelo" name="modelo" class="inputCadastro"><label for="" id="ModeloError" class="feedbackError"></label>
                             <br>
                         
-                            <label for="tipoVeiculo">tipo do Veiculo</label>
-                            <select id="tipoVeiculo" name="tipoVeiculo" form="tipoVeiculoForm">
-                                <option value="Carro">Carro</option>
-                                <option value="Moto">Moto</option>
-                            </select><label for="" id="tipoError" class="feedbackError"></label>
-                            <br><br>
-                        
+                            <label for="tipoVeiculo">Tipo do Veículo</label>
+                                <input type="radio" name="tipodeveiculo" id="tipodeveiculo" value="Carro">
+                            <label for="carro">Carro</label>
+                                <input type="radio" name="tipodeveiculo" id="moto" value="Moto">
+                            <label for="moto">Moto</label>
 
+                            <label for="" id="tipoError" class="feedbackError"></label>
+                            <br><br>
+                            
                             <label for="ano_fabricacao">Ano de frabricação</label>
-                            <input type="date" id="ano_fabricacao" name="ano_fabricacao" class="inputCadastro"><label for="" id="anoError" class="feedbackError"></label>
+                                <input type="number" id="ano_fabricacao" name="ano_fabricacao" class="inputCadastro"><label for="" id="anoError" class="feedbackError"></label>
                             <br><br>
                             
                             <label for="ValorDiaria">Valor Diaria:</label>
-                            <input type="number" id="ValorDiaria" name="ValorDiaria" class="inputCadastro"><label for="" id="diariaError" class="feedbackError"></label>
+                                <input type="number" id="ValorDiaria" name="ValorDiaria" class="inputCadastro"><label for="" id="diariaError" class="feedbackError"></label>
                             <br><br>
                             
                             <label for="quilometragem">Quilometragem:</label>
-                            <input type="number" id="quilometragem" name="quilometragem" class="inputCadastro"><label for="" id="quilometragemError" class="feedbackError"></label>
+                                <input type="number" id="quilometragem" name="quilometragem" class="inputCadastro"><label for="" id="quilometragemError" class="feedbackError"></label>
                             <br><br>
                             <hr>
                             <button type="submit" value="Submit" id="btnEnviarDadosVeiculo">Salvar</button>
                     </div>
+        
                     </div>
                     <div class="consultaVeiculo" id="consultaVeiculo">
                         <div class="tituloConteiner">
                             <label for="" class="cadastroTitulo"><H2>Consulta de Veiculos</H2></label><br>
                             <hr>
                         </div>
+                        <table class="tabelaClientes">
+                            <thead>
+                                <tr>
+                                    <th>Placa</th>
+                                    <th>Tipo</th>
+                                    <th>Modelo</th>
+                                    <th>Ano</th>
+                                    <th>Diária</th>
+                                    <th>Km</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="VeiculosList">
+                                <!-- Linhas da tabela serão inseridas dinamicamente -->
+                            </tbody>
+                        </table>
                         <div class="respostaVeiculo" id="respostaVeiculo">
 
                         </div>
@@ -119,6 +151,7 @@
                
             </div>
         </div>
+            
     </div>
     <script type="module" src="js/Concessionaria/Modelos/interface/interfaceCliente.js"></script>
     <script src="js/Concessionaria/DOM/nav.js"></script>

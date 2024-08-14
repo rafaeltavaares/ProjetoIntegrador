@@ -34,11 +34,11 @@ class BancoDados{
     }
 
     validarPlaca(placa){
-        if(this.veiculos.length === 0 && placa.length === 8)
+        if(this.veiculos.length === 0 && placa.length === 7)
             return true
-        if(placa.length < 8)
+        if(placa.length < 7)
             throw new CadastroVeiculoException("Tamanho a placa inválido")
-        if(placa.length > 8)
+        if(placa.length > 7)
             throw new CadastroVeiculoException("placa maior que 8 digitos")
         if(this.veiculos.some(veiculo => veiculo.placa === placa)){
             throw new ConcessionariaException("placa ja registrada");
@@ -48,40 +48,51 @@ class BancoDados{
 
     validarCPF(cpfToVerify){
         
-        // const func = () => {
-        //     let array_verificador = []
-        //     let cpf = cpfToVerify.split('')
-        //     console.log(cpf)
-        //     for (let index = 0; index < cpf.length - 2; index++) {
-        //         // console.log(cpf[index])
-        //         if(index === 0 )
-        //             array_verificador.push(cpf[index] * 10)  
-        //         if(index === 1)
-        //             array_verificador.push
-        //     }
-
-            
-
-        // }
-        // func()
-        const regex = /^(\d)\1{10}$/;
-        if(this.clientes.length === 0 && cpfToVerify.length === 11){
-            return true
-        }
-        if(cpfToVerify.length < 11)
-            throw new CadastroClienteException("cpf incompleto")
-        if(cpfToVerify.length > 11)
-            throw new CadastroClienteException("cpf maior que 11 digitos ")    
         
-        if(regex.test(cpfToVerify)){
-            throw new CadastroClienteException("Os 11 dígitos não podem ser todos iguais")
+        let cpf = cpfToVerify.replace(/\D/g, '');
+
+
+        if (cpf.length !== 11) {
+            throw new CadastroClienteException("CPF inválido!");
+        }
+
+        if (/^(\d)\1+$/.test(cpf)) {
+            throw new CadastroClienteException("CPF inválido!");
+        }
+
+    
+        let soma = 0;
+        for (let i = 0; i < 9; i++) {
+            soma += parseInt(cpf.charAt(i)) * (10 - i);
+        }
+        let resto = soma % 11;
+        let j = (resto < 2) ? 0 : 11 - resto;
+
+
+        if (parseInt(cpf.charAt(9)) !== j) {
+            throw new CadastroClienteException("CPF inválido!");
+        }
+
+
+        soma = 0;
+        for (let i = 0; i < 10; i++) {
+            soma += parseInt(cpf.charAt(i)) * (11 - i);
+        }
+         resto = soma % 11;
+        let k = (resto < 2) ? 0 : 11 - resto;
+
+
+        if (parseInt(cpf.charAt(10)) !== k) {
+            throw new CadastroClienteException("CPF inválido!");
         }
         if(this.clientes.some(cliente => cliente.CPF === cpfToVerify)){
             throw new ConcessionariaException("cpf ja registrado");
         }
         return true;
         }
+    
     }
+
 
 
 
