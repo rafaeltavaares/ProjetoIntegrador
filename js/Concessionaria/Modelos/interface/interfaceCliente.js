@@ -1,6 +1,7 @@
 import { Interface } from "../BD/BD.js";
 import { Veiculo } from "../Entidades/Veiculo.js";
 import { Cliente } from "../Entidades/Cliente.js";
+import { locacao } from "../Entidades/Locacao.js";
 import { validarNome, validarDataNascimento, validarQuilometragem, validarDiaria, validarModelo, validarAnoFabricacao } from "../../../Script.js";
 const itensLista = document.getElementById("clientesList");
 const itensListaVeiculo = document.getElementById("VeiculosList");
@@ -15,9 +16,12 @@ let quilometragem= document.getElementById("quilometragem");
 let valor_diaria= document.getElementById("ValorDiaria");
 
 let modelo = document.getElementById("modelo");
+const itensLocacao = document.getElementById("tabelaInfoVeiculosAluguel")
+
 export class InterfaceCliente{
     constructor(){
         this.interface = new Interface();
+        this.veiculosAluguel = this.interface.ListarVeiculos();
     }
 
     enviarDadosVeiculo(dados){
@@ -105,6 +109,7 @@ export class InterfaceCliente{
                             window.alert("Cadastro Inserido!")
                             // dados.tipo_veiculo.textContent = '';
                             this.atualizarVeiculosLista();    
+                            this.atualizarLocacao();
                     
                         }              
             
@@ -162,14 +167,20 @@ export class InterfaceCliente{
             }
         }
     }   
+    enviarDadosAluguel(dados){
+        let aa = new locacao(dados);
+        console.log(aa)
+        console.log(this.interface.AcharVeiculo(dados.indexVeiculo))
+        this.interface.ListarVeiculos()[dados.indexVeiculo].setIsAlugado(true);
+        console.log(this.interface.ListarVeiculos())
+        
+    }
+
     atualizarVeiculosLista(){
         itensListaVeiculo.innerHTML = "";
         let veiculos = this.interface.ListarVeiculos();
         veiculos.forEach((item,index) => {
-            // let itemLista = document.createElement("li");
-
-            // const spanDescricao = document.createElement("span")
-            // spanDescricao.textContent = `${index} ${item.tipoVeiculo} ${} ${item.modelo} ${item.Cor} ${item.quilometragem} ${item.valor_diaria} ${item.ano_fabricacao}`;
+           
            let row = document.createElement('tr')
            let placa_formatada = item.placa.replace(/([a-zA-Z]{3})(\d{4})/, "$1-$2");
             row.innerHTML = `
@@ -272,11 +283,28 @@ export class InterfaceCliente{
                 this.atualizarLista();
             };
 
-            const btnAlugar = document.createElement("button")
+            const btnAlugar = document.createElement("button");
+
+            // if(this.veiculosAluguel.length === 0){
+            //     btnAlugar.disabled = true;
+            // }else{
+            //     btnAlugar.disabled = false;
+            // }
             btnAlugar.classList.add('btnAcoes')
             btnAlugar.textContent = "Alugar"
+           
             btnAlugar.onclick = () => {
-                console.log("alugando..")
+                 
+                document.getElementById('alugarVeiculo').style.display = 'block';
+                document.getElementById('consulta').style.display = 'none';
+                let infocpf = document.getElementById('AlugarCPFCliente');
+                let infonome = document.getElementById('AlugarNomeCliente');
+                infocpf.textContent = "CPF: "+ item.CPF;
+                infonome.textContent = "Nome: " + item.Nome;
+                
+                
+
+
             }
             buttons.appendChild(btnAlugar);
             buttons.appendChild(btnExcluir);
@@ -285,7 +313,29 @@ export class InterfaceCliente{
         });
 
     }
-  
+
+    atualizarLocacao(){
+        let row2 = document.createElement("tr") 
+        this.interface.ListarVeiculos().forEach((item,index) =>{
+            if(item.getAlugado() === false){
+                let placa_formatada = item.placa.replace(/([a-zA-Z]{3})(\d{4})/, "$1-$2");
+                row2.innerHTML = `
+                <td><input type="radio" name="veiculo" value="${index}"></td>
+                <td>${placa_formatada}</td>
+                <td> ${item.tipoVeiculo} </td>
+                <td>${item.modelo}</td>
+                <td> ${item.ano_fabricacao} </td>
+                <td>${item.valor_diaria}</td>
+                <td> ${item.quilometragem} </td>
+            `;
+    
+            itensLocacao.appendChild(row2);
+           
+            }
+
+
+        })
+    }
     validarDataFabricacao(dataFabricacao){return validarAnoFabricacao(dataFabricacao);}
 
     validarDiaria(valor_diaria){return validarDiaria(valor_diaria);}
@@ -308,7 +358,25 @@ function clienteInfo(){
     const ic = clienteSetup();
     const btn = document.getElementById("btnEnviarDadosCliente");
     const btn_veiculo = document.getElementById("btnEnviarDadosVeiculo");
-  
+    const btn_locacao = document.getElementById("btnEnviarLocacao");
+
+    btn_locacao.addEventListener("click", ()=>{
+        try{
+            let veiculoSelecionado = document.querySelector('input[name="veiculo"]:checked').value
+            let cliente = document.getElementById("AlugarCPFCliente").innerText;
+            const cpfLimpo = cliente.replace(/[^\d]/g, '');
+            console.log(veiculoSelecionado)
+            console.log(cpfLimpo)
+            const dados = {
+                indexVeiculo: veiculoSelecionado,
+                cpfCliente: cpfLimpo
+            }
+            ic.enviarDadosAluguel(dados);
+        }catch (error){
+            window.alert("selecione alguma coisa")
+        }
+
+    })
     
     btn.addEventListener("click",()=>{
 
@@ -340,6 +408,42 @@ function clienteInfo(){
             modelo.value = ''
         ic.enviarDadosVeiculo(dados);
     });
+
+    document.getElementById("label-cpf").addEventListener("click", function() {
+    
+        var tabela = document.getElementById("tabelaClientes").getElementsByTagName("tbody")[0];
+        var linhas = Array.from(tabela.getElementsByTagName("tr"));
+    
+        linhas.sort(function(a, b) {
+            var cpfA = a.getElementsByTagName("td")[0].textContent;
+            var cpfB = b.getElementsByTagName("td")[0].textContent;
+    
+            return cpfA.localeCompare(cpfB);
+        });
+    
+        linhas.forEach(function(linha) {
+            tabela.appendChild(linha);
+        });
+    });
+
+    document.getElementById("label-nome").addEventListener("click", function() {
+        var tabela = document.getElementById("tabelaClientes").getElementsByTagName("tbody")[0];
+        var linhas = Array.from(tabela.getElementsByTagName("tr"));
+    
+        linhas.sort(function(a, b) {
+            var nomeA = a.getElementsByTagName("td")[1].textContent.toLowerCase();
+            var nomeB = b.getElementsByTagName("td")[1].textContent.toLowerCase();
+    
+            return nomeA.localeCompare(nomeB);
+        });
+    
+        linhas.forEach(function(linha) {
+            tabela.appendChild(linha);
+        });
+    });
+
+
+
 
 }
 

@@ -7,8 +7,11 @@ export class Veiculo{
         this.placa = Dados.placa;
         this.tipoVeiculo = Dados.tipo_veiculo;
         this.tipo = "Veiculo";
+        this.isalugado = false;
     }
 
     getTipo(){return this.tipo}
     getPlaca(){return this.placa}
+    getAlugado(){return this.isalugado}
+    setIsAlugado(fator) {this.isalugado = fator}
 }

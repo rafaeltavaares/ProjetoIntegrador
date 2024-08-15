@@ -7,12 +7,19 @@ class BancoDados{
     constructor(){
         this.clientes = [];
         this.veiculos = [];
+        this.locacao = [];
     }
 
     ListarClientes() {
         return this.clientes;   
     }
-
+    AcharVeiculo(index){
+        try{
+            return this.ListarVeiculos()[index];
+        }catch (error){
+            console.log("Deu algum erro")
+        }
+    }
     excluir(tipo,index){
         if(tipo === "cliente")
             this.clientes.splice(index,1);
@@ -101,6 +108,9 @@ export class Interface{
         this.bancoDados = new BancoDados();
     }
 
+    AcharVeiculo(index){
+        return this.bancoDados.AcharVeiculo(index);
+    }
     listarClientesBD(){
         return this.bancoDados.ListarClientes();
     }

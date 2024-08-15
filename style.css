@@ -147,9 +147,31 @@ input{
 }
 .inputdata{
     display: flex;
-    justify-content: space-between;
-    /* background-color: aqua; */
-    width: 100%;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.inputdata label{
+    width: 150px;
+    margin-right: 10px;
+    text-align: left;
+}
+button:disabled {
+    background-color: #cccccc; 
+    color: #666666;           
+    border: 1px solid #999999; 
+    cursor: not-allowed;           
+    opacity: 0.6;              
+}
+.inputdata #modelo{
+    width: 30%;
+    margin-right: 10px;
+    text-align: left;
+}
+.inputdata #nome{
+    width: 60%;
+    margin-right: 10px;
+    text-align: left;
+
 }
 hr{border: 1px inset rgb(136, 196, 234);}
 /* menu lateral */
@@ -187,4 +209,5 @@ hr{border: 1px inset rgb(136, 196, 234);}
 .menu-section a:hover {
     background-color: rgb(3, 80, 132);
     color: white;
+    
 }

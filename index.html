@@ -16,7 +16,9 @@
             <div class="slogan"><Span>Locadora de Veiculos</Span></div>
         </div>
         <div class="navbar">
+
             <div class="menu-section">
+            
                 <li>Clientes <br>
                     <a href="" onclick="visibilidade(event,'clienteConteiner')">Incluir</a>
                     <ul><a href=""onclick="visibilidade(event,'consulta')">Consultar</a></ul>
@@ -27,49 +29,56 @@
                     <ul><a href="" onclick="visibilidade(event,'consultaVeiculo')">Consultar</a></ul>    
                 </li>
                 <li>Locação              
-                    <ul><a href="#">Consultar</a></ul>
+                    <ul><a href="" onclick="visibilidade(event,'locacaoVeiculo')">Consultar</a></ul>
                 </li>
-                
+                     
             </div>
+       
         </div>
         <div class="conteudo">
             <div class="conteudosec">
-                    <div class="clienteConteiner" id="clienteConteiner">
+                    
+                <div class="clienteConteiner" id="clienteConteiner">
                         <div class="tituloConteiner">
                             <label for="" class="cadastroTitulo"><h2>Cadastro de clientes</h2></label><br>
                             <hr>
                         </div>
+                
                         <div class="cadastroCliente" id="cadastroCliente">
                         
-                        <div class="inputdata">
-                            <label for="cpf">CPF:</label>
-                            <input type="number" name="cpf" id="cpf" class="inputCadastro"\ pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" \ title="Digite um CPF no formato: xxx.xxx.xxx-xx"> <label for="" id="cpfError" class="feedbackError"></label>
+                            <div class="inputdata">
+                                <label for="cpf">CPF:</label>
+                                <input type="number" name="cpf" id="cpf" class="inputCadastro"\ pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" \ title="Digite um CPF no formato: xxx.xxx.xxx-xx"> <label for="" id="cpfError" class="feedbackError"></label>
+                            </div>
+                                <br>
+                            <div class="inputdata">
+                                <label for="nome">Nome:</label>
+                                <input type="text" id="nome" name="nome" class="inputCadastro"><label for="" id="nomeError" class="feedbackError"></label>
+                            </div>
+                                <br>
+                            <div class="inputdata">
+                                <label for="dataNasc">Data de Nascimeno:</label>
+                                <input type="date" id="dataNasc" name="dataNasc" class="inputCadastro"> <label for="" id="dataError" class="feedbackError"></label>
+                            </div>
+                                <br>
+                                <hr>
+                                <button type="submit" value="Submit" id="btnEnviarDadosCliente">Salvar</button>
+                            </div>
+                            
                         </div>
-                            <br>
-                        <div class="inputdata">
-                            <label for="nome">Nome:</label>
-                            <input type="text" id="nome" name="nome" class="inputCadastro"><label for="" id="nomeError" class="feedbackError"></label>
-                        </div>
-                            <br>
-                        <div class="inputdata">
-                            <label for="dataNasc">Data de Nascimeno:</label>
-                            <input type="date" id="dataNasc" name="dataNasc" class="inputCadastro"> <label for="" id="dataError" class="feedbackError"></label>
-                        </div>
-                            <br>
-                            <hr>
-                            <button type="submit" value="Submit" id="btnEnviarDadosCliente">Salvar</button>
-                        </div>
-                    </div>
+                   
                     <div class="consulta" id="consulta">
+                        
                         <div class="tituloConteiner">
                             <label for="" class="cadastroTitulo"><H2>Lista de clientes</H2></label><br>
                             <hr>
                         </div>
-                        <table class="tabelaClientes">
+                        
+                        <table class="tabelaClientes" id="tabelaClientes">
                             <thead>
                                 <tr>
-                                    <th>CPF</th>
-                                    <th>Nome</th>
+                                    <th><label for="" id="label-cpf" style="cursor: pointer;">CPF</label></th>
+                                    <th><label id="label-nome" style="cursor:pointer;">Nome</label></th>
                                     <th>Data de nascimento</th>
                                     <th>Ações</th>
                                 </tr>
@@ -78,46 +87,51 @@
                                 <!-- Linhas da tabela serão inseridas dinamicamente -->
                             </tbody>
                         </table>
-                        <div class="resposta" id="resposta">
-                            
-                        </div>
+                        <div class="resposta" id="resposta"></div>
                     </div>
+
                     <div class="veiculoConteiner" id="veiculoConteiner">
                         <div class="tituloConteiner">
                             <label for="" class="cadastroTitulo"><h2>Cadastro de veiculos</h2></label><br>
                             <hr>
                         </div>
-                        <div class="cadastroVeiculo" id="cadastroVeiculo">
+                     <div class="cadastroVeiculo" id="cadastroVeiculo">
                     
-                        <label for="placa">placa do carro:</label>
-                        <input type="text" name="placa" id="placa" class="inputCadastro"><label for="" id="placaError" class="feedbackError"></label>
-                        <br><br>
-                        
-                            <label for="cor">Modelo:</label>
-                                <input type="text" id="modelo" name="modelo" class="inputCadastro"><label for="" id="ModeloError" class="feedbackError"></label>
-                            <br>
-                        
-                            <label for="tipoVeiculo">Tipo do Veículo</label>
-                                <input type="radio" name="tipodeveiculo" id="tipodeveiculo" value="Carro">
-                            <label for="carro">Carro</label>
-                                <input type="radio" name="tipodeveiculo" id="moto" value="Moto">
-                            <label for="moto">Moto</label>
+                        <div class="inputdata">
+                            <label for="placa">placa do carro:</label>
+                            <input type="text" name="placa" id="placa" class="inputCadastro"><label for="" id="placaError" class="feedbackError"></label>    
+                        </div>
 
-                            <label for="" id="tipoError" class="feedbackError"></label>
-                            <br><br>
-                            
-                            <label for="ano_fabricacao">Ano de frabricação</label>
-                                <input type="number" id="ano_fabricacao" name="ano_fabricacao" class="inputCadastro"><label for="" id="anoError" class="feedbackError"></label>
-                            <br><br>
+                        
+                        <div class="inputdata">
+                            <label for="tipoVeiculo">Tipo do Veículo: </label>
+                            <input type="radio" name="tipodeveiculo" id="tipodeveiculo" value="Carro">
+                            <label for="carro">Carro</label>
+                            <input type="radio" name="tipodeveiculo" id="moto" value="Moto">
+                            <label for="moto">Moto</label>
+                            <label for="" id="tipoError" class="feedbackError"></label>   
+                        </div>
+                        
+                        <div class="inputdata">
+                            <label for="cor">Modelo:</label>
+                            <input type="text" id="modelo" name="modelo" class="inputCadastro"><label for="" id="ModeloError" class="feedbackError"></label>    
+                        </div>
+                        <div class="inputdata">
+                            <label for="ano_fabricacao">Ano: </label>
+                            <input type="number" id="ano_fabricacao" name="ano_fabricacao" class="inputCadastro"><label for="" id="anoError" class="feedbackError"></label>    
+                        </div>
+                        <div class="inputdata">
                             
                             <label for="ValorDiaria">Valor Diaria:</label>
-                                <input type="number" id="ValorDiaria" name="ValorDiaria" class="inputCadastro"><label for="" id="diariaError" class="feedbackError"></label>
-                            <br><br>
+                            <input type="number" id="ValorDiaria" name="ValorDiaria" class="inputCadastro"><label for="" id="diariaError" class="feedbackError"></label>
                             
+                        </div>                    
+                        <div class="inputdata">
                             <label for="quilometragem">Quilometragem:</label>
-                                <input type="number" id="quilometragem" name="quilometragem" class="inputCadastro"><label for="" id="quilometragemError" class="feedbackError"></label>
-                            <br><br>
-                            <hr>
+                            <input type="number" id="quilometragem" name="quilometragem" class="inputCadastro"><label for="" id="quilometragemError" class="feedbackError"></label>
+                        
+                        </div>
+                        <hr>
                             <button type="submit" value="Submit" id="btnEnviarDadosVeiculo">Salvar</button>
                     </div>
         
@@ -148,7 +162,41 @@
                         </div>
                     </div>
                     
-               
+                    <div class="locacaoVeiculo" id="locacaoVeiculo">
+                        Consulta
+
+                    </div>
+
+                    <div class="alugarVeiculo" id="alugarVeiculo">
+                        <div class="tituloConteiner">
+                            <label for="" class="cadastroTitulo"><H2>Locação de Veiculos</H2></label><br>
+                            <hr>
+                        </div>                 
+
+                        <div class="infoCliente">
+                            <label for="" id="AlugarCPFCliente"></label>
+                            <label for="" id="AlugarNomeCliente"></label>
+                        </div>    
+                        <table class="tabelaClientes" id="tabelaInfoVeiculosAluguel">
+                            <thead>
+                                <tr>
+                                    <th>    </th>
+                                    <th>Placa</th>
+                                    <th>Tipo</th>
+                                    <th>Modelo</th>
+                                    <th>Ano</th>
+                                    <th>Diária</th>
+                                    <th>Km</th>
+                                </tr>
+                            </thead>
+                            <tbody id="VeiculosList">
+                                <!-- Linhas da tabela serão inseridas dinamicamente -->
+                            </tbody>
+                        </table>
+                        <button type="submit" value="Submit" id="btnEnviarLocacao">Alugar</button>
+                    </div>
+
+
             </div>
         </div>
             
