@@ -13,6 +13,9 @@ class BancoDados{
     ListarClientes() {
         return this.clientes;   
     }
+    listarLocacoes(){
+        return this.locacao;
+    }
     AcharVeiculo(index){
         try{
             return this.ListarVeiculos()[index];
@@ -35,8 +38,10 @@ class BancoDados{
         if(Dados.getTipo() === "Cliente")
             this.clientes.push(Dados);
         if(Dados.getTipo() === "Veiculo"){
-            
             this.veiculos.push(Dados);
+        }
+        if(Dados.getTipo() === "locacao"){
+            this.locacao.push(Dados);
         }
     }
 
@@ -108,6 +113,10 @@ export class Interface{
         this.bancoDados = new BancoDados();
     }
 
+
+    listarLocacoes(){
+        return this.bancoDados.listarLocacoes();
+    }
     AcharVeiculo(index){
         return this.bancoDados.AcharVeiculo(index);
     }

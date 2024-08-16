@@ -16,7 +16,8 @@ let quilometragem= document.getElementById("quilometragem");
 let valor_diaria= document.getElementById("ValorDiaria");
 
 let modelo = document.getElementById("modelo");
-const itensLocacao = document.getElementById("tabelaInfoVeiculosAluguel")
+const itensLocacao = document.getElementById("VeiculosListAluguel")
+const itensConsultaLocacao = document.getElementById("tabelaConsultaLocaçao")
 
 export class InterfaceCliente{
     constructor(){
@@ -107,8 +108,9 @@ export class InterfaceCliente{
                             this.interface.Adicionar(veiculo);
                         
                             window.alert("Cadastro Inserido!")
-                            // dados.tipo_veiculo.textContent = '';
-                            this.atualizarVeiculosLista();    
+                        
+                            this.atualizarVeiculosLista();  
+                            this.atualizarLista();  
                             this.atualizarLocacao();
                     
                         }              
@@ -168,14 +170,54 @@ export class InterfaceCliente{
         }
     }   
     enviarDadosAluguel(dados){
-        let aa = new locacao(dados);
-        console.log(aa)
-        console.log(this.interface.AcharVeiculo(dados.indexVeiculo))
+        let aluguel = new locacao(dados);
         this.interface.ListarVeiculos()[dados.indexVeiculo].setIsAlugado(true);
-        console.log(this.interface.ListarVeiculos())
-        
+        this.interface.Adicionar(aluguel);
+        console.log(this.interface.listarLocacoes())
+        this.atualizarLocacao();    
+        this.atualizarConsultaLocacao();
     }
+    atualizarConsultaLocacao(){
+        itensConsultaLocacao.innerHTML = "";
+        this.interface.listarLocacoes().forEach((item,index) =>{
+            console.log("teste")
 
+            let cliente = this.interface.listarClientesBD().find(cliente => cliente.CPF === item.indexCliente);
+            let veiculo = this.interface.ListarVeiculos()[index];
+            if(veiculo.getAlugado() === true){
+
+                
+                let formatado = cliente.CPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+                let row = document.createElement('tr')
+                 row.innerHTML = `
+                 <td>${formatado}</td>
+                 <td> ${cliente.Nome} </td>
+                 <td>${veiculo.placa}</td>
+                 <td> ${veiculo.modelo} </td>
+                 <td>${veiculo.valor_diaria}</td>
+                 <td> ${item.data} </td>
+             `;   
+                 console.log('teste')
+    
+                 let buttons = document.createElement('td')
+                 let btnDevolver = document.createElement("button");
+                 btnDevolver.textContent = 'Devolver';
+                 btnDevolver.onclick = () => {
+                    veiculo.setIsAlugado(false);
+                    this.atualizarConsultaLocacao();
+                    this.atualizarLocacao();
+                    this.atualizarLista();
+                 }
+                 buttons.appendChild(btnDevolver);
+                 row.appendChild(buttons);
+                 itensConsultaLocacao.appendChild(row);
+                
+            }
+
+
+
+        });
+    }
     atualizarVeiculosLista(){
         itensListaVeiculo.innerHTML = "";
         let veiculos = this.interface.ListarVeiculos();
@@ -195,7 +237,7 @@ export class InterfaceCliente{
             const btnEditar = document.createElement("button");
             btnEditar.textContent = 'Editar';
             btnEditar.onclick = () => {
-                           // Chama a div do formulário de cadastro de veículo
+            
             document.getElementById('veiculoConteiner').style.display = 'block';
             document.getElementById('consultaVeiculo').style.display = 'none';
 
@@ -252,90 +294,103 @@ export class InterfaceCliente{
         });
     }
 
-    atualizarLista(){
+    atualizarLista() {
         itensLista.innerHTML = "";
+    
+        // Verificar se há veículos disponíveis para locação
+        let veiculosDisponiveis = this.interface.ListarVeiculos().some(veiculo => veiculo.getAlugado() === false);
+  
         let clientes = this.interface.listarClientesBD();
-        clientes.forEach((item,index) => {
-
+        clientes.forEach((item, index) => {
             let formatado = item.CPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-            let data_formatada = item.data_nascimento.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")
-            let row = document.createElement("tr") 
-
+            let data_formatada = item.data_nascimento.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1");
+            let row = document.createElement("tr");
+    
             row.innerHTML = `
-            <td>${formatado}</td>
-            <td>${item.Nome}</td>
-            <td>${data_formatada}</td>
-        `; 
+                <td>${formatado}</td>
+                <td>${item.Nome}</td>
+                <td>${data_formatada}</td>
+            `;
+    
             let buttons = document.createElement('td');
-            
-
+    
+            // Botão de excluir
             const btnExcluir = document.createElement("button");
             btnExcluir.textContent = "Excluir";
-            btnExcluir.classList.add('btnAcoes')
+            btnExcluir.classList.add('btnAcoes');
             btnExcluir.onclick = () => {
                 let item = clientes[index];
-                const confirmacao = confirm(`Deseja realmente excluir a pessoa do cpf: "${item.CPF}"?`);
-        
-                if (!confirmacao) {
-                    return;
-                }
-                this.interface.excluir("cliente",index);
+                const confirmacao = confirm(`Deseja realmente excluir a pessoa do CPF: "${item.CPF}"?`);
+                if (!confirmacao) return;
+    
+                this.interface.excluir("cliente", index);
                 this.atualizarLista();
             };
-
+    
+            // Botão de alugar
             const btnAlugar = document.createElement("button");
-
-            // if(this.veiculosAluguel.length === 0){
-            //     btnAlugar.disabled = true;
-            // }else{
-            //     btnAlugar.disabled = false;
-            // }
-            btnAlugar.classList.add('btnAcoes')
-            btnAlugar.textContent = "Alugar"
-           
+            btnAlugar.textContent = "Alugar";
+            btnAlugar.classList.add('btnAcoes');
+    
+            
+            // Verificar disponibilidade de veículos
+            if (!veiculosDisponiveis) {
+                btnAlugar.disabled = true;
+                btnAlugar.style.backgroundColor = 'gray'; // Estilo para botão desabilitado
+            } else {
+                btnAlugar.disabled = false;
+                btnAlugar.style.backgroundColor = ''; // Resetar estilo para o botão habilitado
+            }
+    
             btnAlugar.onclick = () => {
-                 
                 document.getElementById('alugarVeiculo').style.display = 'block';
                 document.getElementById('consulta').style.display = 'none';
                 let infocpf = document.getElementById('AlugarCPFCliente');
                 let infonome = document.getElementById('AlugarNomeCliente');
-                infocpf.textContent = "CPF: "+ item.CPF;
+                infocpf.textContent = "CPF: " + item.CPF;
                 infonome.textContent = "Nome: " + item.Nome;
-                
-                
-
-
-            }
+                this.atualizarLista();
+            };
+    
+            // Adicionar botões à linha
             buttons.appendChild(btnAlugar);
             buttons.appendChild(btnExcluir);
             row.appendChild(buttons);
             itensLista.appendChild(row);
         });
-
     }
 
-    atualizarLocacao(){
-        let row2 = document.createElement("tr") 
-        this.interface.ListarVeiculos().forEach((item,index) =>{
-            if(item.getAlugado() === false){
-                let placa_formatada = item.placa.replace(/([a-zA-Z]{3})(\d{4})/, "$1-$2");
-                row2.innerHTML = `
-                <td><input type="radio" name="veiculo" value="${index}"></td>
-                <td>${placa_formatada}</td>
-                <td> ${item.tipoVeiculo} </td>
-                <td>${item.modelo}</td>
-                <td> ${item.ano_fabricacao} </td>
-                <td>${item.valor_diaria}</td>
-                <td> ${item.quilometragem} </td>
-            `;
+
+    atualizarLocacao() {
+
+        itensLocacao.innerHTML = '';
     
-            itensLocacao.appendChild(row2);
-           
+        
+        this.interface.ListarVeiculos().forEach((item, index) => {
+            if(item.getAlugado() === false) {
+ 
+                let row2 = document.createElement("tr");
+    
+              
+                let placa_formatada = item.placa.replace(/([a-zA-Z]{3})(\d{4})/, "$1-$2");
+    
+          
+                row2.innerHTML = `
+                    <td><input type="radio" name="veiculo" value="${index}"></td>
+                    <td>${placa_formatada}</td>
+                    <td>${item.tipoVeiculo}</td>
+                    <td>${item.modelo}</td>
+                    <td>${item.ano_fabricacao}</td>
+                    <td>${item.valor_diaria}</td>
+                    <td>${item.quilometragem}</td>
+                `;
+                
+                itensLocacao.appendChild(row2);
             }
-
-
-        })
+        });
     }
+ 
+
     validarDataFabricacao(dataFabricacao){return validarAnoFabricacao(dataFabricacao);}
 
     validarDiaria(valor_diaria){return validarDiaria(valor_diaria);}
@@ -352,6 +407,7 @@ export class InterfaceCliente{
 
 }
 function clienteSetup(){return new InterfaceCliente();}
+
 
 
 function clienteInfo(){

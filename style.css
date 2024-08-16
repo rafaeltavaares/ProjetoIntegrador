@@ -61,6 +61,14 @@ label{
     margin: 3px 0px 3px 0px;
     cursor: pointer;
 }
+.btn_alugar{    padding: 3px 5px 3px 5px;
+    font-size: 1.05rem;
+    background-color: rgb(3, 80, 132);
+    color: white;
+    border: 1px solid rgb(3, 80, 132);
+    margin: 3px 0px 3px 0px;
+    cursor: pointer;
+}
 .cadastroVeiculo{
     /* display: none; */
 }

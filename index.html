@@ -163,7 +163,26 @@
                     </div>
                     
                     <div class="locacaoVeiculo" id="locacaoVeiculo">
-                        Consulta
+                        <div class="tituloConteiner">
+                            <label for="" class="cadastroTitulo"><H2>Locação</H2></label><br>
+                            <hr>
+                        </div>
+                        <table class="tabelaClientes">
+                            <thead>
+                                <tr>
+                                    <th>CPF</th>
+                                    <th>Nome</th>
+                                    <th>Placa</th>
+                                    <th>Modelo</th>
+                                    <th>Diária</th>
+                                    <th>Data da locação</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaConsultaLocaçao">
+                                <!-- Linhas da tabela serão inseridas dinamicamente -->
+                            </tbody>
+                        </table>
 
                     </div>
 
@@ -189,11 +208,11 @@
                                     <th>Km</th>
                                 </tr>
                             </thead>
-                            <tbody id="VeiculosList">
+                            <tbody id="VeiculosListAluguel">
                                 <!-- Linhas da tabela serão inseridas dinamicamente -->
                             </tbody>
                         </table>
-                        <button type="submit" value="Submit" id="btnEnviarLocacao">Alugar</button>
+                        <button type="submit" value="Submit" id="btnEnviarLocacao" class="btn_alugar">Alugar</button>
                     </div>
 
 
