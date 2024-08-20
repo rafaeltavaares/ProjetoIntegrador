@@ -147,12 +147,15 @@ export class InterfaceCliente{
         nome.value = dados.nome;
         cpf.value = dados.cpf;
         
+        
         cpfError.innerHTML = error.mensagem
        }
        try {
         this.validarDataNascimento(dados.Data_nascimento)
        } catch (error) {
         dataError.innerHTML = error.mensagem
+        nome.value = dados.nome;
+        cpf.value = dados.cpf;
        }
        if(dataError.innerHTML === ""){
 
@@ -257,6 +260,8 @@ export class InterfaceCliente{
             const btnSalvar = document.getElementById('btnEnviarDadosVeiculo');
             btnSalvar.onclick = () => {
                 const novoValorDiaria = document.getElementById('ValorDiaria').value;
+                if(novoValorDiaria <= 0 )
+                    
                 item.valor_diaria = novoValorDiaria;
 
                 // Atualiza a lista de veículos com o novo valor da diária
@@ -443,6 +448,7 @@ function clienteInfo(){
         }
         nome.value = ''
         cpf.value = ''
+        Data_nascimento.value = "";
         ic.enviarDados(dados);
         
     }); 
@@ -457,6 +463,11 @@ function clienteInfo(){
             tipo_veiculo: document.querySelector('input[name="tipodeveiculo"]:checked').value,
             modelo : modelo.value
         }
+
+        const radios = document.querySelectorAll('input[name="tipodeveiculo"]:checked');
+            radios.forEach(radio =>{
+                radio.checked = false;
+            })
             quilometragem.value = ''
             placa.value = ''
             ano_fabricacao.value = ''

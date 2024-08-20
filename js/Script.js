@@ -21,7 +21,7 @@ export function validarQuilometragem(quilometragem){
     throw new CadastroVeiculoException("Quilometragem inválida! Valor deve ser maior que zero");
 }
 export function validarAnoFabricacao(data_input) {
-    console.log(data_input);
+    
     const anoAtual = new Date().getFullYear();
     if (data_input > 1999 && data_input <= anoAtual) {
         return true;
@@ -52,7 +52,7 @@ export function validarDataNascimento(data_input) {
     if (idade >= 18) {
         return true;
     } else {
-        throw new CadastroClienteException(`O cliente tem ${data_input} anos. Deve ter pelo menos 18 anos!`);
+        throw new CadastroClienteException(`O cliente tem ${idade} anos. Deve ter pelo menos 18 anos!`);
     }
 }
 export function validarModelo(modelo){
