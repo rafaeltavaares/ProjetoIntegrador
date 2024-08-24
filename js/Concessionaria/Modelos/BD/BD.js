@@ -10,6 +10,16 @@ class BancoDados{
         this.locacao = [];
     }
 
+    AcharCLienteByCpf(cpf){
+        for (let index = 0; index < this.clientes.length; index++) {
+            const element = this.clientes[index];
+            if(element.getCPF() === cpf){
+                return index;
+            }
+            
+        }
+    }
+    
     ListarClientes() {
         return this.clientes;   
     }
@@ -113,7 +123,9 @@ export class Interface{
         this.bancoDados = new BancoDados();
     }
 
-
+    AcharCLienteByCpf(cpf){
+        return this.bancoDados.AcharCLienteByCpf(cpf);
+    }
     listarLocacoes(){
         return this.bancoDados.listarLocacoes();
     }

@@ -4,7 +4,8 @@ export class Cliente{
         this.Usuario = dados.usuario;
         this.CPF = dados.cpf;
         this.data_nascimento = dados.Data_nascimento;
-        this.tipo = "Cliente"
+        this.tipo = "Cliente";
+        this.status = false;
     }
 
     setNome(Nome){this.Nome = Nome;}
@@ -16,4 +17,6 @@ export class Cliente{
     getCPF(){return this.CPF}
 
     getTipo(){return this.tipo;}
+    getStatus(){return this.status;}
+    setStatus(status){return this.status = status;}
 }

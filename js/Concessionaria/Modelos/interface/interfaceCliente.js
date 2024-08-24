@@ -173,10 +173,19 @@ export class InterfaceCliente{
         }
     }   
     enviarDadosAluguel(dados){
+        
         let aluguel = new locacao(dados);
+        
         this.interface.ListarVeiculos()[dados.indexVeiculo].setIsAlugado(true);
+        
+        let indexCLiente = this.interface.AcharCLienteByCpf(dados.cpfCliente)
+        this.interface.listarClientesBD()[indexCLiente].setStatus(true);
+
         this.interface.Adicionar(aluguel);
+        
         console.log(this.interface.listarLocacoes())
+        
+        this.atualizarLista();
         this.atualizarLocacao();    
         this.atualizarConsultaLocacao();
     }
@@ -337,14 +346,19 @@ export class InterfaceCliente{
             btnAlugar.textContent = "Alugar";
             btnAlugar.classList.add('btnAcoes');
     
-            
+            btnAlugar.disabled = false;
+            btnAlugar.style.backgroundColor = ''; 
+                    
             // Verificar disponibilidade de veículos
-            if (!veiculosDisponiveis) {
+            if (!veiculosDisponiveis || item.getStatus() === true) {
                 btnAlugar.disabled = true;
                 btnAlugar.style.backgroundColor = 'gray'; // Estilo para botão desabilitado
-            } else {
-                btnAlugar.disabled = false;
-                btnAlugar.style.backgroundColor = ''; // Resetar estilo para o botão habilitado
+            } 
+            
+
+            if(item.getStatus() === true){
+                btnExcluir.disabled = true;
+                btnExcluir.style.backgroundColor = 'gray';
             }
     
             btnAlugar.onclick = () => {
