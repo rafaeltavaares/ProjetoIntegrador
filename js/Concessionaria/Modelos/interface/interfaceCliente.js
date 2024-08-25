@@ -187,6 +187,7 @@ export class InterfaceCliente{
         
         this.atualizarLista();
         this.atualizarLocacao();    
+        this.atualizarVeiculosLista();
         this.atualizarConsultaLocacao();
         document.getElementById("locacaoVeiculo").style.display = 'block'
         document.getElementById("alugarVeiculo").style.display = 'none'
@@ -331,6 +332,10 @@ export class InterfaceCliente{
             
             const btnExcluir = document.createElement("button");
             btnExcluir.textContent = "Excluir";
+            if(item.getAlugado() === true){
+                btnExcluir.disabled = true;
+                btnExcluir.style.backgroundColor = ''
+            }
             btnExcluir.onclick = () => {
                 let item = veiculos[index];
                 const confirmacao = confirm(`Deseja realmente excluir o veiculo da placa: "${item.placa}"?`);
@@ -341,6 +346,7 @@ export class InterfaceCliente{
                 this.interface.excluir("veiculo",index);
                 this.atualizarVeiculosLista();
             };
+
             btnEditar.classList.add('btnAcoes')
             btnExcluir.classList.add('btnAcoes')
             buttons.appendChild(btnEditar);
