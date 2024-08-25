@@ -188,13 +188,17 @@ export class InterfaceCliente{
         this.atualizarLista();
         this.atualizarLocacao();    
         this.atualizarConsultaLocacao();
+        document.getElementById("locacaoVeiculo").style.display = 'block'
+        document.getElementById("alugarVeiculo").style.display = 'none'
     }
     atualizarConsultaLocacao(){
         itensConsultaLocacao.innerHTML = "";
         this.interface.listarLocacoes().forEach((item,index) =>{
             console.log("teste")
 
-            let cliente = this.interface.listarClientesBD().find(cliente => cliente.CPF === item.indexCliente);
+            let indexCliente = this.interface.AcharCLienteByCpf(item.getindexCliente())
+            
+            let cliente = this.interface.listarClientesBD()[indexCliente];
             let veiculo = this.interface.ListarVeiculos()[index];
             if(veiculo.getAlugado() === true){
 
@@ -215,10 +219,48 @@ export class InterfaceCliente{
                  let btnDevolver = document.createElement("button");
                  btnDevolver.textContent = 'Devolver';
                  btnDevolver.onclick = () => {
+
                     veiculo.setIsAlugado(false);
-                    this.atualizarConsultaLocacao();
-                    this.atualizarLocacao();
-                    this.atualizarLista();
+                    cliente.setStatus(false);
+                    const sections = document.querySelectorAll('.conteudosec > div');
+                    sections.forEach(content =>{
+                       
+                        content.style.display = "none";
+                    });
+                    
+                    document.getElementById("devolverLocacao").style.display = "block";
+                    let devolverLocacaoInfos = document.getElementById("info");
+                    let infoCliente = document.createElement("p");
+                    devolverLocacaoInfos.innerHTML = ''                    
+                    infoCliente.innerHTML = 
+                    `
+                    CPF: ${formatado}<br>
+                    Nome: ${cliente.getNome()}<br>
+                    Placa: ${veiculo.getPlaca()}<br>
+                    Modelo: ${veiculo.getModelo()}<br>
+                    diaria: ${veiculo.getDiaria()}<br>
+                    quilometragem: ${veiculo.getQuilometragem()}<br>
+                    data da locacao: ${item.getDataLocacao()}<br>
+                    Quilometragem atual: <input type='number' id='novaQuilometragem'> </input>
+                    <hr>
+                    `
+                    let attButton = document.createElement("button");
+                    attButton.textContent = "confirmar"
+                    attButton.onclick = () => {
+                         
+                        let novaQuilometragem = document.getElementById("novaQuilometragem").value;
+                        this.interface.ListarVeiculos()[index].setQuilometragem(novaQuilometragem);
+                        this.interface.ListarVeiculos()[index].setIsAlugado(false);
+                        this.interface.listarClientesBD()[indexCliente].setStatus(false);            
+                        document.getElementById("devolverLocacao").style.display = 'none';
+                        this.atualizarConsultaLocacao();
+                        this.atualizarVeiculosLista();
+                        this.atualizarLocacao();
+                        this.atualizarLista();     
+                    }
+                    devolverLocacaoInfos.appendChild(infoCliente);
+                    devolverLocacaoInfos.appendChild(attButton)
+         
                  }
                  buttons.appendChild(btnDevolver);
                  row.appendChild(buttons);
@@ -257,7 +299,7 @@ export class InterfaceCliente{
             const inputs = document.querySelectorAll("#veiculoConteiner input");
             inputs.forEach((input) => {
                 if (input.id !== 'ValorDiaria') {
-                    input.disabled = true;
+                    input.disabled = true
                 } else {
                     // Preenche o campo "ValorDiaria" com o valor atual
                     input.value = item.valor_diaria;
@@ -368,6 +410,7 @@ export class InterfaceCliente{
                 let infonome = document.getElementById('AlugarNomeCliente');
                 infocpf.textContent = "CPF: " + item.CPF;
                 infonome.textContent = "Nome: " + item.Nome;
+                document.getElementById("")
                 this.atualizarLista();
             };
     

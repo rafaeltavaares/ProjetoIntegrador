@@ -8,12 +8,14 @@ export class Cliente{
         this.status = false;
     }
 
-    setNome(Nome){this.Nome = Nome;}
     getNome(){return this.Nome;}
-
-    setUsuario(Usuario){this.Usuario = Usuario;}
+    getData(){return this.data_nascimento}
+    
+    
     getUsuario(){return this.Usuario;}
-
+    setUsuario(Usuario){this.Usuario = Usuario;}
+    setNome(Nome){this.Nome = Nome;}
+    
     getCPF(){return this.CPF}
 
     getTipo(){return this.tipo;}

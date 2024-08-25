@@ -6,6 +6,8 @@ export class locacao{
         this.tipo = "locacao";
     }
 
+    getindexCliente(){return this.indexCliente;}
+    getDataLocacao(){return this.data}
     getTipo(){
         return this.tipo;
     }

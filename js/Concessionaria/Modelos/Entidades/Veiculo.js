@@ -11,7 +11,11 @@ export class Veiculo{
     }
 
     getTipo(){return this.tipo}
+    getModelo(){return this.modelo}
     getPlaca(){return this.placa}
     getAlugado(){return this.isalugado}
+    getQuilometragem(){return this.quilometragem}
+    setQuilometragem(quilometragem){this.quilometragem = quilometragem}
+    getDiaria(){return this.valor_diaria}
     setIsAlugado(fator) {this.isalugado = fator}
 }

@@ -1,4 +1,3 @@
-
 function visibilidade(event,id){
     event.preventDefault()
     const sections = document.querySelectorAll('.conteudosec > div');
