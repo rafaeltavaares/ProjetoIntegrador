@@ -38,6 +38,8 @@ class BancoDados{
             this.clientes.splice(index,1);
         if(tipo === "veiculo")
             this.veiculos.splice(index,1);
+        if(tipo === "locacao")
+            this.locacao.splice(index,1);
     }
 
     ListarVeiculos(){

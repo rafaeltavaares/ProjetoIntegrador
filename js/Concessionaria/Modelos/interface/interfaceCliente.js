@@ -18,6 +18,8 @@ let valor_diaria= document.getElementById("ValorDiaria");
 let modelo = document.getElementById("modelo");
 const itensLocacao = document.getElementById("VeiculosListAluguel")
 const itensConsultaLocacao = document.getElementById("tabelaConsultaLocaçao")
+let diariaError = document.getElementById("diariaError");
+let quilometragemError = document.getElementById("quilometragemError");
 
 export class InterfaceCliente{
     constructor(){
@@ -28,7 +30,6 @@ export class InterfaceCliente{
     enviarDadosVeiculo(dados){
 
         let modeloError = document.getElementById("ModeloError");
- 
         let tipoError = document.getElementById("tipoError");
         let placaError = document.getElementById("placaError");
         let anoError = document.getElementById("anoError");
@@ -41,6 +42,7 @@ export class InterfaceCliente{
         anoError.innerHTML = "";
         diariaError.innerHTML = "";
         quilometragemError.innerHTML = "";
+        
         try {
             this.interface.verificarPlaca(dados.placa)
         } catch (error) {
@@ -84,7 +86,6 @@ export class InterfaceCliente{
             quilometragemError.innerHTML = error.mensagem;
         }
         try {
-            console.log(dados.ano_fabricacao)
             this.validarDataFabricacao(dados.ano_fabricacao)
         } catch (error) {
             placa.value = dados.placa;
@@ -138,7 +139,7 @@ export class InterfaceCliente{
        } catch (error) {
         nome.value = dados.nome;
         cpf.value = dados.cpf;
-        nomeError.innerHTML = error.mensagem
+        nomeError.innerHTML = error.mensagem;
        }
        try {
 
@@ -148,12 +149,12 @@ export class InterfaceCliente{
         cpf.value = dados.cpf;
         
         
-        cpfError.innerHTML = error.mensagem
+        cpfError.innerHTML = error.mensagem;
        }
        try {
         this.validarDataNascimento(dados.Data_nascimento)
        } catch (error) {
-        dataError.innerHTML = error.mensagem
+        dataError.innerHTML = error.mensagem;
         nome.value = dados.nome;
         cpf.value = dados.cpf;
        }
@@ -183,7 +184,6 @@ export class InterfaceCliente{
 
         this.interface.Adicionar(aluguel);
         
-        console.log(this.interface.listarLocacoes())
         
         this.atualizarLista();
         this.atualizarLocacao();    
@@ -192,40 +192,36 @@ export class InterfaceCliente{
         document.getElementById("locacaoVeiculo").style.display = 'block'
         document.getElementById("alugarVeiculo").style.display = 'none'
     }
+   
     atualizarConsultaLocacao(){
         itensConsultaLocacao.innerHTML = "";
-        this.interface.listarLocacoes().forEach((item,index) =>{
-            console.log("teste")
-
-            let indexCliente = this.interface.AcharCLienteByCpf(item.getindexCliente())
+        this.interface.listarLocacoes().forEach((item, index) => {
             
+            let indexCliente = this.interface.AcharCLienteByCpf(item.getindexCliente())
             let cliente = this.interface.listarClientesBD()[indexCliente];
             let veiculo = this.interface.ListarVeiculos()[index];
+    
             if(veiculo.getAlugado() === true){
-
-                
+    
                 let formatado = cliente.CPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
                 let row = document.createElement('tr')
-                 row.innerHTML = `
-                 <td>${formatado}</td>
-                 <td> ${cliente.Nome} </td>
-                 <td>${veiculo.placa}</td>
-                 <td> ${veiculo.modelo} </td>
-                 <td>${veiculo.valor_diaria}</td>
-                 <td> ${item.data} </td>
-             `;   
-                 console.log('teste')
+                row.innerHTML = `
+                <td>${formatado}</td>
+                <td> ${cliente.Nome} </td>
+                <td>${veiculo.placa}</td>
+                <td> ${veiculo.modelo} </td>
+                <td>${veiculo.valor_diaria}</td>
+                <td> ${item.data} </td>
+            `;   
     
-                 let buttons = document.createElement('td')
-                 let btnDevolver = document.createElement("button");
-                 btnDevolver.textContent = 'Devolver';
-                 btnDevolver.onclick = () => {
-
-                    veiculo.setIsAlugado(false);
-                    cliente.setStatus(false);
+                let buttons = document.createElement('td')
+                let btnDevolver = document.createElement("button");
+                btnDevolver.textContent = 'Devolver';
+                btnDevolver.classList.add('btnAcoes');
+    
+                btnDevolver.onclick = () => {
                     const sections = document.querySelectorAll('.conteudosec > div');
-                    sections.forEach(content =>{
-                       
+                    sections.forEach(content => {
                         content.style.display = "none";
                     });
                     
@@ -242,35 +238,36 @@ export class InterfaceCliente{
                     diaria: ${veiculo.getDiaria()}<br>
                     quilometragem: ${veiculo.getQuilometragem()}<br>
                     data da locacao: ${item.getDataLocacao()}<br>
-                    Quilometragem atual: <input type='number' id='novaQuilometragem'> </input>
+                    Quilometragem atual: <input type='number' id='novaQuilometragem'> </input> <label class = "feedbackError" id = "quilometragemErrorDevolucao"> </label> 
                     <hr>
                     `
-                    let attButton = document.createElement("button");
-                    attButton.textContent = "confirmar"
-                    attButton.onclick = () => {
-                         
+                    const attButton = document.createElement("button");  
+                    attButton.textContent = "Confirmar"
+                    attButton.onclick = () => {                   
                         let novaQuilometragem = document.getElementById("novaQuilometragem").value;
-                        this.interface.ListarVeiculos()[index].setQuilometragem(novaQuilometragem);
-                        this.interface.ListarVeiculos()[index].setIsAlugado(false);
-                        this.interface.listarClientesBD()[indexCliente].setStatus(false);            
-                        document.getElementById("devolverLocacao").style.display = 'none';
-                        this.atualizarConsultaLocacao();
-                        this.atualizarVeiculosLista();
-                        this.atualizarLocacao();
-                        this.atualizarLista();     
+                        if (novaQuilometragem > 0 && novaQuilometragem > this.interface.ListarVeiculos()[index].getQuilometragem()){
+                            this.interface.ListarVeiculos()[index].setQuilometragem(novaQuilometragem);
+                            this.interface.ListarVeiculos()[index].setIsAlugado(false);
+                            this.interface.listarClientesBD()[indexCliente].setStatus(false);     
+                            this.interface.excluir("locacao", index);   
+                            document.getElementById("devolverLocacao").style.display = 'none';
+                            this.atualizarConsultaLocacao();
+                            this.atualizarVeiculosLista();
+                            this.atualizarLocacao();
+                            this.atualizarLista();    
+                        } else {
+                            document.getElementById("quilometragemErrorDevolucao").innerHTML = 'Quilometragem inválida! Valor deve ser maior que a quilometragem atual.';
+                        }
                     }
                     devolverLocacaoInfos.appendChild(infoCliente);
                     devolverLocacaoInfos.appendChild(attButton)
          
-                 }
-                 buttons.appendChild(btnDevolver);
-                 row.appendChild(buttons);
-                 itensConsultaLocacao.appendChild(row);
-                
+                }
+                buttons.appendChild(btnDevolver);
+                row.appendChild(buttons);
+                itensConsultaLocacao.appendChild(row);
             }
-
-
-
+    
         });
     }
     atualizarVeiculosLista(){
@@ -306,32 +303,56 @@ export class InterfaceCliente{
                     input.value = item.valor_diaria;
                     input.disabled = false;
                 }
+                if (input.id == 'modelo'){
+                    input.value = item.modelo;
+                }
+
+                if (input.id == 'ano_fabricacao'){
+                    input.value = item.ano_fabricacao;
+                }
+
+                if (input.id == 'quilometragem'){
+                    input.value = item.quilometragem;
+                }
+
+                if (input.id == 'placa'){
+                    input.value = item.placa;
+                }            
             });
 
             // Configura o botão de salvar para atualizar o valor da diária
             const btnSalvar = document.getElementById('btnEnviarDadosVeiculo');
             btnSalvar.onclick = () => {
-                const novoValorDiaria = document.getElementById('ValorDiaria').value;
-                if(novoValorDiaria <= 0 )
-                    
-                item.valor_diaria = novoValorDiaria;
+                const novoValorDiaria = document.getElementById('ValorDiaria');
+                if(novoValorDiaria.value <= 0 || item.valor_diaria > novoValorDiaria.value){
+                    diariaError.innerHTML = 'Valor diária inválido! Valor deve ser maior que o valor da quilometragem atual do veículo';
+                } else {                           
+                item.valor_diaria = novoValorDiaria.value;
+                diariaError.value = '';
 
                 // Atualiza a lista de veículos com o novo valor da diária
                 this.atualizarVeiculosLista();
                 alert('Valor da diária atualizado com sucesso!');
-
+                
                 // Oculta o formulário de cadastro após a edição
                 document.getElementById('veiculoConteiner').style.display = 'none';
-
+                valor_diaria.value = '';
+                quilometragem.value = '';
+                modelo.value = '';
+                placa.value = '';
+                ano_fabricacao.value = '';
+                
                 // Reativa os campos desativados
                 inputs.forEach((input) => {
                     input.disabled = false;
                 });
+                }
             };
             }
             
             const btnExcluir = document.createElement("button");
             btnExcluir.textContent = "Excluir";
+            console.log(item.getAlugado())
             if(item.getAlugado() === true){
                 btnExcluir.disabled = true;
                 btnExcluir.style.backgroundColor = ''
@@ -345,14 +366,16 @@ export class InterfaceCliente{
                 }
                 this.interface.excluir("veiculo",index);
                 this.atualizarVeiculosLista();
+                this.atualizarLocacao();
+                this.atualizarLista();
             };
 
-            btnEditar.classList.add('btnAcoes')
-            btnExcluir.classList.add('btnAcoes')
+            btnEditar.classList.add('btnAcoes');
+            btnExcluir.classList.add('btnAcoes');
             buttons.appendChild(btnEditar);
             buttons.appendChild(btnExcluir);
-            row.appendChild(buttons)
-            itensListaVeiculo.appendChild(row)
+            row.appendChild(buttons);
+            itensListaVeiculo.appendChild(row);
         });
     }
 
@@ -371,7 +394,7 @@ export class InterfaceCliente{
             row.innerHTML = `
                 <td>${formatado}</td>
                 <td>${item.Nome}</td>
-                <td>${data_formatada}</td>
+                <td>${data_formatada}</td>  
             `;
     
             let buttons = document.createElement('td');
@@ -489,8 +512,6 @@ function clienteInfo(){
             let veiculoSelecionado = document.querySelector('input[name="veiculo"]:checked').value
             let cliente = document.getElementById("AlugarCPFCliente").innerText;
             const cpfLimpo = cliente.replace(/[^\d]/g, '');
-            console.log(veiculoSelecionado)
-            console.log(cpfLimpo)
             const dados = {
                 indexVeiculo: veiculoSelecionado,
                 cpfCliente: cpfLimpo
@@ -498,6 +519,7 @@ function clienteInfo(){
             ic.enviarDadosAluguel(dados);
         }catch (error){
             window.alert("selecione alguma coisa")
+            console.log(error)
         }
 
     })

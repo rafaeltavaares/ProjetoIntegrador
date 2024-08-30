@@ -1,27 +1,31 @@
-*{
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+* {
     padding: 0;
     margin: 0;
 }
-.conteiner{
+
+.conteiner {
     display: grid;
     width: 100%;
-    height: 100%;
-
-    grid-template-columns: repeat(3, auto-fill);
-    grid-template-rows:repeat(auto-fill, minmax(100px, 1fr));
-
+    height: 100vh; /* Ocupa toda a altura da tela */
+    grid-template-columns: 200px 1fr 1fr; /* Define a largura da navbar e das colunas de conteúdo */
+    grid-template-rows: 100px 1fr 1fr; /* Garante que a área de conteúdo ocupe o restante do espaço */
     grid-template-areas:
-    "header header header"
-    "navbar conteudo conteudo"
-    "navbar conteudo conteudo"
-    
+        "header header header"
+        "navbar conteudo conteudo"
+        "navbar conteudo conteudo";
 }
 
-div{
+div {
     /* height: 100%; */
 }
 
-.header span{
+.header span {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-size: 32px;
@@ -29,56 +33,52 @@ div{
     font-style: italic;
     margin-right: 100px;
 }
-.header{
+
+.header {
     display: flex;
-    justify-content:flex-end;
-    align-items: center; 
+    justify-content: flex-end;
+    align-items: center;
     background-color: rgb(3, 80, 132);
     grid-area: header;
 }
-.navbar{
+
+.navbar {
     grid-area: navbar;
-    height: 450px;
-    background-color:rgb(148, 206, 236);
+    height: 100%; /* A navbar agora ocupará toda a altura da grid area designada */
+    background-color: rgb(148, 206, 236);
 }
-.conteudo{
+
+.conteudo {
     background-color: rgb(167, 210, 236);
     grid-area: conteudo;
 }
-.conteudosec > div{
+
+.conteudosec > div {
     display: none;
 }
 
+label {
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-label{
-    font-family:Arial, Helvetica, sans-serif; 
-}
-.cadastroVeiculo button{
-    padding: 3px 5px 3px 5px;
+.cadastroVeiculo button, .btn_alugar {
+    padding: 3px 5px;
     font-size: 1.05rem;
     background-color: rgb(3, 80, 132);
     color: white;
     border: 1px solid rgb(3, 80, 132);
-    margin: 3px 0px 3px 0px;
+    margin: 3px 0;
     cursor: pointer;
 }
-.btn_alugar{    padding: 3px 5px 3px 5px;
-    font-size: 1.05rem;
-    background-color: rgb(3, 80, 132);
-    color: white;
-    border: 1px solid rgb(3, 80, 132);
-    margin: 3px 0px 3px 0px;
-    cursor: pointer;
-}
-.cadastroVeiculo{
+
+.cadastroVeiculo {
     /* display: none; */
 }
-.consulta{
 
-}
-.resposta{
+.consulta {}
 
-}
+.resposta {}
+
 .tabelaClientes {
     width: 80%;
     border-collapse: collapse;
@@ -119,74 +119,99 @@ label{
     background-color: #003366;
 }
 
-.cadastroTitulo{
+.cadastroTitulo {
     color: rgb(61, 61, 160);
     font-weight: bold;
     font-size: 20px;
     padding: 10px;
     margin-left: 30px;
 }
-/* Design do formulario */
-input{
+
+.info button {
+    background-color: #004080;
+    color: white;
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px; 
+}
+
+.info button:hover {
+    background-color: #003366;
+}
+
+/* Design do formulário */
+input {
     border-radius: 3px;
 }
-.cadastroCliente #nome{
+
+.cadastroCliente #nome {
     width: 100px;
 }
-.feedbackError{
+
+.feedbackError {
     /* display: none; */
     color: red;
-
 }
-.cadastroCliente button{
-    padding: 3px 5px 3px 5px;
+
+.cadastroCliente button {
+    padding: 3px 5px;
     font-size: 1.05rem;
     background-color: rgb(3, 80, 132);
     color: white;
     border: 1px solid rgb(3, 80, 132);
-    margin: 3px 0px 3px 0px;
+    margin: 3px 0;
     cursor: pointer;
 }
-.clienteConteiner{
+
+.clienteConteiner {
     display: flex;
     /* display: none; */
     /* justify-content: space-evenly; */
     width: 90%;
     height: 90%;
 }
-.inputdata{
+
+.inputdata {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
-.inputdata label{
+
+.inputdata label {
     width: 150px;
     margin-right: 10px;
     text-align: left;
 }
+
 button:disabled {
-    background-color: #cccccc; 
-    color: #666666;           
-    border: 1px solid #999999; 
-    cursor: not-allowed;           
-    opacity: 0.6;              
+    background-color: #cccccc;
+    color: #666666;
+    border: 1px solid #999999;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
-.inputdata #modelo{
+
+.inputdata #modelo {
     width: 30%;
     margin-right: 10px;
     text-align: left;
 }
-.inputdata #nome{
-    width: 60%;
+
+.inputdata #nome {
+    width: 22%;
     margin-right: 10px;
     text-align: left;
-
 }
-hr{border: 1px inset rgb(136, 196, 234);}
-/* menu lateral */
+
+hr {
+    border: 1px inset rgb(136, 196, 234);
+}
+
+/* Menu lateral */
 .menu {
     background-color: #ADD8E6; /* Cor de fundo semelhante à da imagem */
-   
     padding: 20px;
     width: 200px;
 }
@@ -200,7 +225,7 @@ hr{border: 1px inset rgb(136, 196, 234);}
     font-family: Arial, Helvetica, sans-serif;
     color: #004080; /* Cor azul escura para o texto */
     list-style-type: none;
-    font-size:large;
+    font-size: large;
     font-weight: bold;
     margin-left: 5px;
     margin-top: 10px;
@@ -218,5 +243,4 @@ hr{border: 1px inset rgb(136, 196, 234);}
 .menu-section a:hover {
     background-color: rgb(3, 80, 132);
     color: white;
-    
 }

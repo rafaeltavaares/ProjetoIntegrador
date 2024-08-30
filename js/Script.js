@@ -10,7 +10,7 @@ export function validarNome(nome){
 }
 
 export function validarDiaria(valor_diaria){
-    if(valor_diaria > 0 )
+    if(valor_diaria > 0)
         return true;
     throw new CadastroVeiculoException("Valor diária inválido! Valor deve ser maior que zero");
 }
@@ -21,20 +21,18 @@ export function validarQuilometragem(quilometragem){
     throw new CadastroVeiculoException("Quilometragem inválida! Valor deve ser maior que zero");
 }
 export function validarAnoFabricacao(data_input) {
-    
+
     const anoAtual = new Date().getFullYear();
     if (data_input > 1999 && data_input <= anoAtual) {
         return true;
     } else {
-        return new CadastroVeiculoException(`Ano inválido! Ano deve ser maior que 1999 e menor ou igual ao ano atual.`);
+        throw new CadastroVeiculoException('Ano inválido! Ano  ser maiodever que 1999 e menor ou igual ao ano atual.');
     }
 }
-
 
 export function validarDataNascimento(data_input) {
     const dataAtual = new Date();
     const data_nascimento = new Date(data_input);
-    console.log(data_input)
     const anoAtual = dataAtual.getFullYear();
     const mesAtual = dataAtual.getMonth();
     const diaAtual = dataAtual.getDate();
@@ -52,7 +50,11 @@ export function validarDataNascimento(data_input) {
     if (idade >= 18) {
         return true;
     } else {
+        if (isNaN(data_nascimento.getTime()) || idade <= 0) { 
+            throw new CadastroClienteException("Data inválida!");
+        } else {
         throw new CadastroClienteException(`O cliente tem ${idade} anos. Deve ter pelo menos 18 anos!`);
+        }
     }
 }
 export function validarModelo(modelo){
